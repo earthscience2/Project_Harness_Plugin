@@ -240,7 +240,7 @@
   .btn-del{border:1px solid var(--error);background:transparent;color:var(--error);}
 
   /* automation */
-  .auto-wrap{height:100%;overflow:auto;padding:20px 24px;}
+  .auto-wrap{height:100%;overflow:auto;padding:20px 24px;max-width:760px;margin:0 auto;}
   .auto-h{font-size:22px;font-weight:700;margin:0 0 4px;}
   .auto-hsub{color:var(--dim);font-size:13px;margin-bottom:18px;line-height:1.6;}
   /* 대시보드 통계 + 필터 + 그룹 (자동화·로그 공용) */
@@ -1238,22 +1238,39 @@ async function renderLog(){
   document.getElementById('panel').innerHTML='<div class="empty">기록 단일 소스: logs/log.jsonl</div>';
 }
 
-// ===== 보고서 (reports) — 목록은 reports/reports.json, 본문은 HTML(모달 iframe). 단일 소스 = 파일. =====
+// ===== 보고서 (reports) — 목록 reports/reports.json, 본문 HTML(모달 iframe). type=형태(5종+기타) 필터. =====
+const RTYPE={ppt:'PPT',doc:'문서',benchmark:'벤치마크',experiment:'실험',demo:'데모',etc:'기타'};
+const RTCOL={ppt:'#f0883e',doc:'#58a6ff',benchmark:'#7ee787',experiment:'#bc8cff',demo:'#ff7b72',etc:'#8b949e'};
+const RTICON={ppt:'📽️',doc:'📄',benchmark:'📊',experiment:'🧪',demo:'🎬',etc:'📌'};
+const rType=r=>RTYPE[r.type]?r.type:'etc';   // 모르는/빈 type → 기타
+let reportFilter='all';
 async function renderReports(){
   let data;
   try{ data=await (await fetch(ROOT+'reports/reports.json')).json(); }catch(e){ data={reports:[]}; }
   const rs=(data.reports||[]).slice().sort((a,b)=>(b.date||'').localeCompare(a.date||''));
   const meta=r=>(r.date||'')+(r.area?(' · '+(byId[r.area]?.title||r.area)):'');
-  const cards = rs.length ? rs.map(r=>
-    `<a class="file" data-href="${ROOT}reports/${r.file}" data-name="${esc(r.title||r.file)}" data-meta="${esc(meta(r))}">
-      ${esc(r.title||r.file)}<span class="meta">${esc(meta(r))}${r.summary?(' — '+esc(r.summary)):''}</span></a>`
-  ).join('') : `<div class="empty">아직 보고서가 없습니다. <code>reports/_template.html</code> 을 복사해 만들고 <code>reports/reports.json</code> 에 한 줄 추가하세요.</div>`;
+  const counts={}; rs.forEach(r=>{ const t=rType(r); counts[t]=(counts[t]||0)+1; });
+  const chips = rs.length ? `<div class="filt">
+    <span class="filt-chip ${reportFilter==='all'?'on':''}" data-f="all">전체<b>${rs.length}</b></span>
+    ${Object.keys(RTYPE).filter(t=>counts[t]).map(t=>`<span class="filt-chip ${reportFilter===t?'on':''}" data-f="${t}" style="${reportFilter===t?'':`border-color:${RTCOL[t]}66`}">${RTICON[t]} ${RTYPE[t]}<b>${counts[t]}</b></span>`).join('')}
+  </div>` : '';
+  const view = reportFilter==='all' ? rs : rs.filter(r=>rType(r)===reportFilter);
+  const cards = rs.length ? (view.map(r=>{ const t=rType(r), col=RTCOL[t];
+    return `<div class="auto-card" data-href="${ROOT}reports/${r.file}" data-name="${esc(r.title||r.file)}" data-meta="${esc(meta(r))}" style="border-left:3px solid ${col}">
+      <div class="auto-head">
+        <span class="chipt" style="color:${col};border-color:${col}">${RTICON[t]} ${RTYPE[t]}</span>
+        <span class="auto-title" style="font-size:14px">${esc(r.title||r.file)}</span>
+      </div>
+      <div class="auto-sub">${esc(meta(r))}${r.summary?(' · '+esc(r.summary)):''}</div>
+    </div>`; }).join('') || `<div class="empty">이 형태의 보고서가 없습니다.</div>`)
+    : `<div class="empty">아직 보고서가 없습니다. <code>reports/_template.html</code> 을 복사해 만들고 <code>reports/reports.json</code> 에 <code>type</code>(${Object.keys(RTYPE).filter(t=>t!=='etc').join('/')})과 함께 한 줄 추가하세요.</div>`;
   document.getElementById('main').innerHTML=
     `<div class="auto-wrap"><div class="auto-h">보고서</div>
-     <div class="auto-hsub">HTML 보고서. 단일 소스 <code>reports/reports.json</code> · 클릭하면 본문을 봅니다.</div>
-     ${cards}</div>`;
+     <div class="auto-hsub">HTML 보고서 · 형태(type)별 필터. 단일 소스 <code>reports/reports.json</code> · 클릭하면 본문.</div>
+     ${chips}${cards}</div>`;
+  document.querySelectorAll('.filt-chip').forEach(c=>c.onclick=()=>{ reportFilter=c.dataset.f; renderReports(); });
   document.querySelectorAll('#main [data-href]').forEach(el=>el.onclick=()=>openModal(el.dataset.href, el.dataset.name, el.dataset.meta||''));
-  document.getElementById('panel').innerHTML='<div class="empty">새 보고서: reports/_template.html 복사 → reports.json 에 한 줄.</div>';
+  document.getElementById('panel').innerHTML='<div class="empty">새 보고서: reports/_template.html 복사 → reports.json 에 한 줄(type 포함).</div>';
 }
 
 function switchTab(t){

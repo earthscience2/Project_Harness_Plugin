@@ -1,6 +1,6 @@
 {
   "name": "area-harness",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "영역(Area) 하네스 — 코드를 옮기지 않는 오버레이 SSOT 구조. 빈/기존 프로젝트를 영역·일정·자동화·로그로 관리하고 AI가 개발한다.",
   "keywords": ["harness", "area", "ssot", "overlay", "registry"]
 }
