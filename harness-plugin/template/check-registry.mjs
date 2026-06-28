@@ -1,8 +1,9 @@
 #!/usr/bin/env node
 // registry.json 정합성 + 영역 크기 검사. 하네스 루트에서: node check-registry.mjs [경로/registry.json]
 // AI 가 registry.json 을 편집하므로 끊긴 참조·고아·역할 오류를 즉시 잡고,
-// 말단 크기(in-area src/ + content + ssot)를 실제 파일에서 추정한다 — 토큰 숫자를 손으로 적지 않는다.
-// errors → 종료코드 1 (편집/분열 후 게이트). 미수용 잔여(영역 밖 sources)·예산초과는 warn.
+// 말단 크기(content/ + ssot/)를 실제 파일에서 추정한다 — 토큰 숫자를 손으로 적지 않는다.
+// 코드는 영역 안으로 수용(contained): 말단 코드는 areas/<path>/content/ 에 산다(밖을 가리키는 sources 없음).
+// errors → 종료코드 1 (편집/분열 후 게이트). 예산초과는 warn.
 import { readFileSync, existsSync, statSync, readdirSync, writeFileSync } from 'node:fs';
 import { dirname, join, isAbsolute, resolve, extname } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -10,7 +11,7 @@ import { fileURLToPath } from 'node:url';
 const arg = process.argv[2];
 const regPath = arg ? (isAbsolute(arg) ? arg : resolve(process.cwd(), arg))
                     : join(dirname(fileURLToPath(import.meta.url)), 'registry.json');
-const ROOT = dirname(regPath);   // 상대경로(ssot·canonical·sources)는 레지스트리 폴더 기준
+const ROOT = dirname(regPath);   // 상대경로(path·ssot canonical)는 레지스트리 폴더 기준
 const errors = [], warns = [];
 const E = m => errors.push(m), W = m => warns.push(m);
 
@@ -86,16 +87,15 @@ for (const a of areas) {
   if (a.role === 'leaf') {
     if (!a.path) E(`${a.id}: 말단인데 path 없음`);
     let bytes = 0;
-    // 영역 폴더 = src/(수용된 실소스) + content/(전용 자료) + ssot/(NOTES.md + 문서). 용량은 세 폴더 실측.
+    // 영역 폴더 = 정확히 두 칸: content/(수용된 실소스 — 폴더 구조 그대로) + ssot/(NOTES.md + 문서). 용량은 두 폴더 실측.
     if (a.path) {
       if (!existsSync(join(ROOT, a.path, 'ssot', 'NOTES.md'))) E(`${a.id}: ssot/NOTES.md 없음 (영역 1차 SSOT)`);
-      bytes += bytesOf(join(ROOT, a.path, 'src'));
       bytes += bytesOf(join(ROOT, a.path, 'content'));
       bytes += bytesOf(join(ROOT, a.path, 'ssot'));
       const dir = join(ROOT, a.path);
       if (existsSync(dir)) for (const e of readdirSync(dir, { withFileTypes: true }))
-        if (e.isDirectory() && !['src', 'content', 'ssot'].includes(e.name))
-          W(`${a.id}: 영역 폴더에 '${e.name}/' — src·content·ssot 만 허용(소스는 src/, 자료는 content/, 문서는 ssot/)`);
+        if (e.isDirectory() && !['content', 'ssot'].includes(e.name))
+          W(`${a.id}: 영역 폴더에 '${e.name}/' — content·ssot 만 허용(코드는 content/, 문서는 ssot/)`);
     }
     // 추가 ssot: 공유는 외부 정본이라 따로 더함, 로컬은 ssot/ walk 에 이미 포함(존재만 검사).
     for (const s of a.ssot || []) {
@@ -103,18 +103,17 @@ for (const a of areas) {
       if (sh) { if (existsSync(join(ROOT, sh.canonical))) bytes += bytesOf(join(ROOT, sh.canonical)); else E(`${a.id}: 공유 ssot '${s}' 정본 없음`); }
       else if (!(a.path && existsSync(join(ROOT, a.path, 'ssot', s + '.md')))) E(`${a.id}: ssot '${s}' 로컬파일(${a.path}ssot/${s}.md) 없음`);
     }
-    // sources: 수용(contained) 후 영역 내부 areas/<path>/src/... 를 가리켜야 한다.
-    // src/ 는 위에서 이미 용량에 포함됨 → 여기선 중복 합산 안 하고 위치/존재만 검증.
-    const base = a.path ? a.path.replace(/\\/g, '/').replace(/\/?$/, '/') : null;
-    for (const src of a.sources || []) {
-      const s = src.replace(/\\/g, '/');
-      if (!base || !s.startsWith(base + 'src/')) W(`${a.id}: sources '${src}' 가 영역 밖 — 미수용 잔여(${a.path}src/ 로 이동 필요)`);
-      else if (!existsSync(join(ROOT, src))) W(`${a.id}: sources '${src}' 경로 없음(in-area)`);
-    }
     sizes.push({ id: a.id, bytes });
     if (bytes >= BUDGET_B) W(`${a.id}: ${fmtB(bytes)} — 예산 초과, 분열 권고`);
     else if (bytes >= BUDGET_B * 0.8) W(`${a.id}: ${fmtB(bytes)} — 예산 80% 초과, 분열 임박`);
-  } else if (!a.file) E(`${a.id}: ${a.role} 인데 file 없음`);
+  } else if (a.role === 'bridge') {
+    // 중간다리 = 자식 목록만. 영역 폴더에 ssot/NOTES.md(흡수된 _area.md), content/ 는 코드 없음.
+    if (!a.path) E(`${a.id}: 중간다리인데 path 없음`);
+    else {
+      if (!existsSync(join(ROOT, a.path, 'ssot', 'NOTES.md'))) E(`${a.id}: ssot/NOTES.md 없음 (중간다리 자식 목록)`);
+      if (bytesOf(join(ROOT, a.path, 'content'))) W(`${a.id}: 중간다리인데 content/ 에 코드 있음 — 실코드는 말단에만`);
+    }
+  } else if (!a.file) E(`${a.id}: ${a.role} 인데 file 없음`);   // global: GLOBAL.md
 }
 
 // shared_ssot 정합성

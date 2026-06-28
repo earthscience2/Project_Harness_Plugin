@@ -1,6 +1,6 @@
 {
   "name": "area-harness",
   "version": "0.4.0",
-  "description": "영역(Area) 하네스 — 수용(contained) SSOT 구조. adopt 시 소스를 각 영역(src/+content/+ssot/)으로 물리 이동해 디렉터리가 영역 트리와 정합. 일정·자동화(Claude Code/외부 API 키)·로그·보고서를 마인드맵 콘솔로 관리. serve.py 로 키 저장·자동화 실행까지.",
+  "description": "영역(Area) 하네스 — 수용(contained) SSOT 구조. adopt 시 소스를 각 영역의 content/ 로 물리 이동해 디렉터리가 영역 트리와 정합(영역 폴더 = ssot/+content/ 두 칸). 일정·자동화(Claude Code/외부 API 키)·로그·보고서를 마인드맵 콘솔로 관리. serve.py 로 키 저장·자동화 실행까지.",
   "keywords": ["harness", "area", "ssot", "contained", "registry", "automation", "research"]
 }

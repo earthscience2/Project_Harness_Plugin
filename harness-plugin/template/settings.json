@@ -1,0 +1,21 @@
+{
+  "providers": [
+    { "label": "Anthropic (Claude)", "fields": [
+      { "key": "ANTHROPIC_API_KEY", "label": "API 키", "placeholder": "sk-ant-..." }
+    ] },
+    { "label": "OpenAI", "fields": [
+      { "key": "OPENAI_API_KEY", "label": "API 키", "placeholder": "sk-..." }
+    ] },
+    { "label": "Google (Gemini)", "fields": [
+      { "key": "GOOGLE_API_KEY", "label": "API 키", "placeholder": "AIza..." }
+    ] }
+  ],
+  "channels": [
+    { "label": "Slack", "fields": [
+      { "key": "SLACK_WEBHOOK_URL", "label": "Webhook URL", "placeholder": "https://hooks.slack.com/services/..." }
+    ] },
+    { "label": "Discord", "fields": [
+      { "key": "DISCORD_WEBHOOK_URL", "label": "Webhook URL", "placeholder": "https://discord.com/api/webhooks/..." }
+    ] }
+  ]
+}

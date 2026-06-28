@@ -1,6 +1,6 @@
 # area-harness — 플러그인 정리
 
-코드를 **영역으로 수용(contained)** 하는 SSOT 하네스. `/harness-adopt` 가 소스를 각 영역(`src/`) 안으로 물리 이동해 디렉터리 구조 = 영역 트리로 정합시키고, 영역(Area) 지식 그래프 + 일정·자동화·로그·보고서를 얹고, Claude Code 가 그 위에서 일한다.
+코드를 **영역으로 수용(contained)** 하는 SSOT 하네스. `/harness-adopt` 가 소스를 각 영역의 `content/` 안으로 물리 이동해 디렉터리 구조 = 영역 트리로 정합시키고, 영역(Area) 지식 그래프 + 일정·자동화·로그·보고서를 얹고, Claude Code 가 그 위에서 일한다. 모든 비-전역 영역은 **정확히 두 칸**: `ssot/`(문서) + `content/`(코드).
 
 ## 두 가지 프로필
 
@@ -8,7 +8,7 @@
 |---|---|---|
 | 까는 명령 | `/harness-init`(빈) · `/harness-adopt`(기존 코드) | `/harness-research-init` |
 | 영역 구조 | 자유 — 의미대로 추가·분열·이동·삭제 | **잠김** — 고정 6영역, 추가·삭제 불가 |
-| `sources` | 실제 코드 | 데이터셋·노트북·스크립트 |
+| `content/` | 실제 코드 | 데이터셋·노트북·스크립트 |
 | 핵심 루프 | 짜고 → 배포·관리 | 계획 → 테스트 → 결과추출 → 인사이트 |
 | 전용 조각 | — | `runs/`(런 원장), 2티어 평가 |
 | 공통 | 영역 그래프 · `schedule` · `automation` · `logs` · **`reports`(HTML)** · web 콘솔 | |
@@ -19,8 +19,8 @@
 
 | 명령 | 하는 일 |
 |------|---------|
-| `/harness-init` | 빈 저장소에 서비스용 골격 생성(이후 새 코드는 영역 `src/` 안에). |
-| `/harness-adopt [범위]` | 기존 코드를 영역으로 **수용**(소스를 각 영역 `src/` 로 `git mv` 이동). 구조 제안 → 승인 → 이동 → 참조 재작성 → 빌드 게이트 → 작성. 실패 시 롤백. |
+| `/harness-init` | 빈 저장소에 서비스용 골격 생성(이후 새 코드는 영역 `content/` 안에). |
+| `/harness-adopt [범위]` | 기존 코드를 영역으로 **수용**(소스를 각 영역 `content/` 로 `git mv` 이동). 구조 제안 → 승인 → 이동 → 참조 재작성 → 빌드 게이트 → 작성. 실패 시 롤백. |
 | `/harness-area <add\|split\|move\|rm>` | 영역 편집. `registry.json` 단일 편집 → 검사 → 로그. **잠긴 구조면 add/split/rm 거부.** |
 | `/harness-status` | 상태 점검(말단 크기·분열 후보·끊긴 참조·최근 로그). 읽기 전용. |
 | `/harness-research-init` | 연구용 골격 생성 — 잠긴 6영역 + 런 원장 + HTML 보고서. |
@@ -28,10 +28,10 @@
 ## 영역 모델
 
 - **전역**: 마인드맵 루트. 설명서(`GLOBAL.md`).
-- **중간다리**: 연결만 하는 노드(`_area.md`, 자식 목록). **자식 ≥ 2 일 때만.**
-- **말단**: 실내용. 영역 폴더 = **`src/`(수용된 실소스) + `content/`(전용 자료) + `ssot/`(NOTES.md + 문서)**. adopt 가 소스를 `src/` 로 이동, `sources` 는 영역 내부(`areas/<path>/src/...`)를 가리킨다.
+- **중간다리**: 연결만 하는 노드(`ssot/NOTES.md` 자식 목록, `content/` 비움). **자식 ≥ 2 일 때만.**
+- **말단**: 실내용. 영역 폴더 = **정확히 두 칸: `ssot/`(NOTES.md 본문 + `<id>.md` 문서) + `content/`(코드 — 폴더 구조 그대로)**. adopt 가 소스를 `content/` 로 이동, 코드 위치는 거기로 암묵 고정(밖을 가리키는 `sources` 없음).
 
-**규칙:** 코드 수용(adopt 시 영역 `src/` 로 이동) · 경계는 의미로(1영역=1책임) · 공유 모듈은 `areas/shared/src/` · 토큰은 2차 가드레일 · 실내용은 말단에만 · 변경하면 `logs/log.jsonl` 한 줄.
+**규칙:** 코드 수용(adopt 시 영역 `content/` 로 이동) · 경계는 의미로(1영역=1책임) · 공유 모듈은 `areas/shared/content/` · 토큰은 2차 가드레일 · 실내용은 말단에만 · 변경하면 `logs/log.jsonl` 한 줄.
 
 ### registry.json — 단일 소스
 영역 트리의 유일한 진실. 추가/분열/공유 변경 시 이 파일만 고친다. 사람용 트리는 web 마인드맵이 실시간으로 그린다.
@@ -86,7 +86,7 @@ harness-plugin/
     harness/                            #   마인드맵 + 탭 콘솔
     Harness Ops Design System/      #   공유 디자인시스템(토큰·컴포넌트)
     schedule/ automation/ logs/ reports/ _ssot/
-    research/                       # 연구 오버레이 — research-init 이 추가로 깖
+    research/                       # 연구 프로필 — research-init 이 추가로 깖
       registry.json(잠김)  GLOBAL.md  areas/  runs/
 ```
 

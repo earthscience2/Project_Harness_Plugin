@@ -7,12 +7,12 @@ allowed-tools: Bash, Read
 
 ## 절차
 1. 루트에 `registry.json` 이 없으면: 하네스 아님 → `/harness-init` 또는 `/harness-adopt` 안내하고 종료.
-2. `node check-registry.mjs` 실행. 출력(말단 크기 = in-area `src/`+content+ssot·예산 초과·끊긴 참조·고아·단일자식 중간다리·영역 밖 sources)을 그대로 받는다.
+2. `node check-registry.mjs` 실행. 출력(말단 크기 = `content/`+`ssot/`·예산 초과·끊긴 참조·고아·단일자식 중간다리·`ssot/NOTES.md` 누락)을 그대로 받는다.
 3. `logs/log.jsonl` 의 **최근 5줄**을 읽어 최신순으로 요약(ts·actor·op·summary).
 4. 보고를 다음으로 정리:
    - **요약 한 줄**: 영역 N(말단 M) · 검사 통과/실패 · 경고 수.
    - **분열 후보**: 예산 80%+ 말단(검사기 크기). 없으면 "없음".
    - **고쳐야 할 것**: 검사기 오류(끊긴 참조·고아·말단 children·자식수)가 있으면 나열 + 각각 `/harness-area` 로 어떻게 고칠지 한 줄 제안.
-   - **수용 점검**: `영역 밖 sources`(미수용 잔여 — `/harness-adopt` 나 `/harness-area move` 로 그 코드를 영역 `src/` 로 수용) · `경로 없음(in-area)`(이동 후 끊긴 참조).
+   - **수용 점검**: `ssot/NOTES.md 없음`(말단 본문 누락) · `content/ 에 코드 있음`(중간다리인데 실코드 — 말단으로 내려야) · `영역 폴더에 …/`(content·ssot 외 폴더).
    - **최근 활동**: 로그 최근 5줄.
 5. 검사기가 exit 1 이면 그 사실을 명확히(상단에 ✗). 제안만 하고 자동 수정은 하지 않는다.

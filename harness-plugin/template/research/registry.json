@@ -1,24 +1,19 @@
 {
   "version": "0.1.0",
+  "project": "TODO",
   "profile": "research",
   "root": "global",
-  "overlay": true,
   "locked": true,
   "skeleton": ["global", "hypotheses", "data", "experiments", "insights", "reports"],
   "token_budget": 1000000,
   "areas": [
     { "id": "global", "title": "전역 영역", "role": "global",
       "file": "GLOBAL.md", "children": ["hypotheses", "data", "experiments", "insights", "reports"] },
-    { "id": "hypotheses", "title": "가설/질문", "role": "leaf", "parent": "global",
-      "path": "areas/hypotheses/", "content": ["NOTES.md"], "ssot": [], "sources": [] },
-    { "id": "data", "title": "데이터/자료", "role": "leaf", "parent": "global",
-      "path": "areas/data/", "content": ["NOTES.md"], "ssot": [], "sources": [] },
-    { "id": "experiments", "title": "실험", "role": "leaf", "parent": "global",
-      "path": "areas/experiments/", "content": ["NOTES.md"], "ssot": [], "sources": [] },
-    { "id": "insights", "title": "인사이트", "role": "leaf", "parent": "global",
-      "path": "areas/insights/", "content": ["NOTES.md"], "ssot": [], "sources": [] },
-    { "id": "reports", "title": "보고서", "role": "leaf", "parent": "global",
-      "path": "areas/reports/", "content": ["NOTES.md"], "ssot": [], "sources": ["reports/"] }
+    { "id": "hypotheses", "title": "가설/질문", "role": "leaf", "parent": "global", "path": "areas/hypotheses/", "ssot": [] },
+    { "id": "data", "title": "데이터/자료", "role": "leaf", "parent": "global", "path": "areas/data/", "ssot": [] },
+    { "id": "experiments", "title": "실험", "role": "leaf", "parent": "global", "path": "areas/experiments/", "ssot": [] },
+    { "id": "insights", "title": "인사이트", "role": "leaf", "parent": "global", "path": "areas/insights/", "ssot": [] },
+    { "id": "reports", "title": "보고서", "role": "leaf", "parent": "global", "path": "areas/reports/", "ssot": [] }
   ],
   "shared_ssot": []
 }

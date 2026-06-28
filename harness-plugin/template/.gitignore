@@ -1,0 +1,6 @@
+# API 키 등 시크릿을 내보낸 env 파일 — 절대 커밋 금지
+*.env
+automation.env
+# 빌드·캐시 산출물
+__pycache__/
+dist/

@@ -2,7 +2,7 @@
 // area-harness 플러그인 스모크 테스트. 프레임워크 없음 — assert + 종료코드.
 // 실행: node test/smoke.mjs   (repo 루트에서)
 // 검사: ① 매니페스트 정합성  ② /harness-init 산출물이 check-registry 게이트를 통과(exit 0)
-import { readFileSync, existsSync, cpSync, rmSync, mkdtempSync, writeFileSync } from 'node:fs';
+import { readFileSync, existsSync, cpSync, rmSync, mkdtempSync, writeFileSync, mkdirSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { tmpdir } from 'node:os';
@@ -44,6 +44,47 @@ try {
   ok(false, `check-registry.mjs 실패:\n${e.stdout?.toString() || ''}${e.stderr?.toString() || e.message}`);
 } finally {
   rmSync(tmp, { recursive: true, force: true });
+}
+
+// ③ 수용(contained) 두 칸 구조: 중간다리(ssot/NOTES.md, content/ 비움) + 말단(ssot/ + content/ 코드)
+//    check-registry 가 새 구조에서 통과하고, content/ 코드를 용량에 세고, ssot/NOTES.md 누락을 게이트하는지.
+const CHECK = join(TEMPLATE, 'check-registry.mjs');
+const runCheck = (dir) => { try { execFileSync('node', [CHECK, join(dir, 'registry.json')], { stdio: 'pipe' }); return { code: 0 }; }
+  catch (e) { return { code: 1, out: (e.stdout?.toString() || '') + (e.stderr?.toString() || '') }; } };
+const w = (dir, rel, body) => { mkdirSync(join(dir, dirname(rel)), { recursive: true }); writeFileSync(join(dir, rel), body); };
+
+const fx = mkdtempSync(join(tmpdir(), 'harness-contained-'));
+try {
+  w(fx, 'registry.json', JSON.stringify({
+    version: '0.1.0', project: 'fx', root: 'global', contained: true, token_budget: 1000000,
+    areas: [
+      { id: 'global', title: '전역', role: 'global', file: 'GLOBAL.md', children: ['api'] },
+      { id: 'api', title: 'API', role: 'bridge', path: 'areas/api/', parent: 'global', children: ['users', 'orders'] },
+      { id: 'users', title: 'Users', role: 'leaf', path: 'areas/api/users/', parent: 'api', children: [], ssot: [] },
+      { id: 'orders', title: 'Orders', role: 'leaf', path: 'areas/api/orders/', parent: 'api', children: [], ssot: [] },
+    ], shared_ssot: [],
+  }));
+  w(fx, 'GLOBAL.md', '# 전역\n');
+  w(fx, 'areas/api/ssot/NOTES.md', '# API\n자식: users, orders\n');       // 중간다리: NOTES 만, content/ 없음
+  w(fx, 'areas/api/users/ssot/NOTES.md', '# Users\n[코드](../content/app.py)\n');
+  w(fx, 'areas/api/users/content/app.py', 'def users():\n    return []\n');   // 코드는 content/ 직속
+  w(fx, 'areas/api/orders/ssot/NOTES.md', '# Orders\n');
+  w(fx, 'areas/api/orders/content/app.py', 'def orders():\n    return []\n');
+
+  ok(runCheck(fx).code === 0, 'check-registry: 두 칸 구조(중간다리+말단, content/ 코드) 통과');
+
+  // 말단 content/app.py 가 용량에 잡히는지(sizes 사이드카는 harness/ 있을 때만 — 여기선 stdout 만)
+  const okOut = execFileSync('node', [CHECK, join(fx, 'registry.json')], { encoding: 'utf8' });
+  ok(/users/.test(okOut) && /orders/.test(okOut), 'check-registry: 말단 크기 출력에 content/ 영역 포함');
+
+  // 게이트: 말단에서 ssot/NOTES.md 를 지우면 exit 1
+  rmSync(join(fx, 'areas/api/orders/ssot/NOTES.md'));
+  const broke = runCheck(fx);
+  ok(broke.code === 1 && /NOTES\.md/.test(broke.out || ''), 'check-registry: ssot/NOTES.md 누락 → 게이트 실패(exit 1)');
+} catch (e) {
+  ok(false, `contained 픽스처 실패: ${e.message}`);
+} finally {
+  rmSync(fx, { recursive: true, force: true });
 }
 
 console.log(fails ? `\n✗ ${fails}개 실패` : '\n✓ 전부 통과');

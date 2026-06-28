@@ -659,12 +659,13 @@ async function renderPanel(a){
   if(a.role==='global'){
     h+=`<h3>파일</h3>`+fileLink(ROOT+'GLOBAL.md','GLOBAL.md','설명서')+fileLink(ROOT+'registry.json','registry.json','영역 레지스트리(단일 소스)');
   } else if(a.role==='bridge'){
-    h+=`<h3>연결 파일</h3>`+fileLink(ROOT+a.file,a.file.split('/').pop(),'자식 영역 목록만');
+    const nf = a.path ? a.path+'ssot/NOTES.md' : a.file;   // 중간다리: ssot/NOTES.md(자식 목록). 구 registry 는 a.file 폴백
+    h+=`<h3>연결 파일</h3>`+fileLink(ROOT+nf,'NOTES.md','자식 영역 목록');
     h+=`<h3>자식 영역</h3>`+(a.children||[]).map(c=>`<div class="file">${byId[c].title} <span class="meta">${roleKo(byId[c].role)}</span></div>`).join('');
   } else {
     const ss=a.ssot||[];
-    // ssot 섹션: NOTES.md(영역 1차 SSOT) + 추가 ssot 문서
-    let ssotHtml=`<a class="file" data-href="${ROOT+a.path}ssot/NOTES.md" data-name="NOTES.md" data-meta="영역 1차 SSOT">NOTES.md<span class="meta">영역 1차 SSOT</span></a>`;
+    // ① ssot: 이 영역의 ssot 문서들(<id>.md). NOTES.md 본문은 아래 ②에서 직접 렌더.
+    let ssotHtml='';
     if(ss.length){
       const items=await Promise.all(ss.map(async id=>{
         const {url,meta}=resolveSsot(a,id);
@@ -672,19 +673,19 @@ async function renderPanel(a){
         const sh=sharedOf(id)?icon('share','ic-badge'):'';
         return `<a class="file" data-href="${url}" data-name="${id}" data-meta="${meta}">${catBadge(cat)}${sh}${id}<span class="meta">${meta}</span></a>`;
       }));
-      ssotHtml+=items.join('');
-    }
+      ssotHtml=items.join('');
+    } else ssotHtml=`<div class="empty">ssot 문서 없음</div>`;
     if(seq!==panelSeq) return;                 // 더 최근 클릭이 있으면 폐기
     h+=`<h3>ssot</h3>`+ssotHtml;
-    // 구조: 영역 폴더(src/ + content/ + ssot/) 트리 — 수용된 소스(sources)가 있으면 위에 함께 표시
-    h+=`<h3>구조</h3>`;
-    if((a.sources||[]).length) h+= a.sources.map(s=>`<div class="file">${esc(s)}<span class="meta">수용된 소스(영역 내부 src/)</span></div>`).join('');
-    h+=`<div id="tree" class="tree"><div class="empty">읽는 중…</div></div>`;
+    // ② 내용: ssot/NOTES.md 본문을 우측 창에 직접 렌더
+    h+=`<h3>내용</h3><div id="notes" class="md"><div class="empty">읽는 중…</div></div>`;
+    // ③ 폴더 구조: content/ 하위 코드 트리(접이식). 코드 위치가 곧 영역 구조.
+    h+=`<h3>폴더 구조</h3><div id="tree" class="tree"><div class="empty">읽는 중…</div></div>`;
   }
   if(seq!==panelSeq) return;
   p.innerHTML=h;
   p.querySelector('#rename')?.addEventListener('click',()=>renameArea(a.id));
-  if(a.role==='leaf') fillTree(a, seq);
+  if(a.role==='leaf'){ fillNotes(a, seq); fillTree(a, seq); }
 }
 function fileLink(href,name,meta){
   return `<a class="file" data-href="${href}" data-name="${name}" data-meta="${meta}">${name}<span class="meta">${meta}</span></a>`;
@@ -703,6 +704,16 @@ function fillTree(a){
   if(!kids||!kids.length){ el.innerHTML='<div class="empty">없음</div>'; return; }
   const base=ROOT+a.path+"content/";
   el.innerHTML='<ul>'+kids.map(ch=>treeNode(ch, base)).join("")+'</ul>';
+}
+// ② 내용: ssot/NOTES.md 를 우측 창에 렌더(모달의 md 뷰어와 같은 mdToHtml).
+async function fillNotes(a, seq){
+  const el=document.getElementById("notes"); if(!el) return;
+  try{
+    const r=await fetch(ROOT+a.path+"ssot/NOTES.md");
+    if(seq!==panelSeq) return;
+    if(!r.ok){ el.innerHTML='<div class="empty">ssot/NOTES.md 없음</div>'; return; }
+    el.innerHTML=mdToHtml(await r.text());
+  }catch(e){ el.innerHTML='<div class="empty">불러오기 실패</div>'; }
 }
 
 // ---- ssot/md viewer modal ----
