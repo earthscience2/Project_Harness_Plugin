@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>보고서 제목 — YYYY-MM-DD</title>
+<link rel="stylesheet" href="../Harness Ops Design System/styles.css">
+<style>
+  html{background:var(--bg-app,#0e0e10);}
+  body{margin:0;background:var(--bg-app,#0e0e10);color:var(--text-primary,#ededf0);
+    font-family:-apple-system,'Pretendard','Segoe UI',sans-serif;padding:36px 28px;max-width:880px;margin:0 auto;line-height:1.7;}
+  a.back{color:var(--text-secondary);font-size:13px;text-decoration:none;}
+  h1{font-size:26px;margin:14px 0 2px;}
+  .meta{color:var(--text-secondary);font-size:13px;font-family:var(--font-mono);margin-bottom:24px;}
+  h2{font-size:18px;color:var(--accent);margin-top:28px;border-bottom:1px solid var(--border-default);padding-bottom:6px;}
+  table{border-collapse:collapse;width:100%;margin:12px 0;font-size:14px;}
+  th,td{border:1px solid var(--border-default);padding:8px 12px;text-align:left;}
+  th{background:var(--surface-2);color:var(--accent);}
+  code{background:var(--surface-2);padding:2px 6px;border-radius:4px;font-family:var(--font-mono);font-size:13px;}
+</style>
+</head>
+<body>
+  <a class="back" href="index.html">← 보고서 목록</a>
+  <h1>보고서 제목</h1>
+  <div class="meta">YYYY-MM-DD · area: experiments · 근거 run: …</div>
+
+  <h2>요약</h2>
+  <p>한 문단. 무엇을 발견했나.</p>
+
+  <h2>결과</h2>
+  <table>
+    <tr><th>exp</th><th>지표</th><th>비고</th></tr>
+    <tr><td>baseline</td><td>0.000</td><td></td></tr>
+  </table>
+
+  <h2>인사이트</h2>
+  <ul><li>…</li></ul>
+</body>
+</html>

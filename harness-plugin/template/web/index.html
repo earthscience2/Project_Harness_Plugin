@@ -335,6 +335,7 @@
     <div class="tab" data-tab="schedule"><svg class="ic ic-tab" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="4" width="18" height="17" rx="2" stroke="currentColor" stroke-width="2"/><path d="M3 9h18M8 2v4M16 2v4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>일정</div>
     <div class="tab" data-tab="auto"><svg class="ic ic-tab" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M13 2 4 14h7l-1 8 9-12h-7l1-8Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>자동화</div>
     <div class="tab" data-tab="log"><svg class="ic ic-tab" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>로그</div>
+    <div class="tab" data-tab="reports"><svg class="ic ic-tab" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8l-5-5Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M14 3v5h5M9 13h6M9 17h5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>보고서</div>
     <div class="spacer"></div>
     <div class="tab" data-tab="settings"><svg class="ic ic-tab" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" stroke="currentColor" stroke-width="2"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>설정</div>
     <div class="mini" id="reset"><svg class="ic ic-mini" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 20C9.76667 20 7.875 19.225 6.325 17.675C4.775 16.125 4 14.2333 4 12C4 9.76667 4.775 7.875 6.325 6.325C7.875 4.775 9.76667 4 12 4C13.15 4 14.25 4.2375 15.3 4.7125C16.35 5.1875 17.25 5.86667 18 6.75V5C18 4.71667 18.0958 4.47917 18.2875 4.2875C18.4792 4.09583 18.7167 4 19 4C19.2833 4 19.5208 4.09583 19.7125 4.2875C19.9042 4.47917 20 4.71667 20 5V10C20 10.2833 19.9042 10.5208 19.7125 10.7125C19.5208 10.9042 19.2833 11 19 11H14C13.7167 11 13.4792 10.9042 13.2875 10.7125C13.0958 10.5208 13 10.2833 13 10C13 9.71667 13.0958 9.47917 13.2875 9.2875C13.4792 9.09583 13.7167 9 14 9H17.2C16.6667 8.06667 15.9375 7.33333 15.0125 6.8C14.0875 6.26667 13.0833 6 12 6C10.3333 6 8.91667 6.58333 7.75 7.75C6.58333 8.91667 6 10.3333 6 12C6 13.6667 6.58333 15.0833 7.75 16.25C8.91667 17.4167 10.3333 18 12 18C13.1333 18 14.1708 17.7125 15.1125 17.1375C16.0542 16.5625 16.7833 15.7917 17.3 14.825C17.4333 14.5917 17.6208 14.4292 17.8625 14.3375C18.1042 14.2458 18.35 14.2417 18.6 14.325C18.8667 14.4083 19.0583 14.5833 19.175 14.85C19.2917 15.1167 19.2833 15.3667 19.15 15.6C18.4667 16.9333 17.4917 18 16.225 18.8C14.9583 19.6 13.55 20 12 20Z" fill="currentColor"/></svg>배치 초기화</div>
@@ -360,6 +361,7 @@
 <script>
 const ROOT = '../';                 // harness/ 기준 하네스 루트
 let MANIFEST = {};
+let SIZES = { leaves:{}, budget:4000000 };   // web/sizes.json — check-registry 가 실파일에서 계산해 emit
 const COLW = 230, ROWH = 92, NW = 172, NH = 64;
 const CANVAS_W = 4000, CANVAS_H = 3000, MARGIN = 60;
  const GRID = 20;                          // 보이지 않는 스냅 격자 (선은 안 그림)
@@ -397,6 +399,7 @@ const ICONS={
   edit:'<path d="M4 20H8L18.5 9.5C19.0304 8.96957 19.3284 8.25015 19.3284 7.5C19.3284 6.74985 19.0304 6.03043 18.5 5.5C17.9696 4.96957 17.2501 4.67157 16.5 4.67157C15.7499 4.67157 15.0304 4.96957 14.5 5.5L4 16V20Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>'
 };
 function icon(n,cls){ return `<svg class="ic ${cls||''}" viewBox="0 0 24 24" fill="none" aria-hidden="true">${ICONS[n]||''}</svg>`; }
+function fmtBytes(b){ return b>=1048576 ? (b/1048576).toFixed(1)+' MB' : (b/1024).toFixed(0)+' KB'; }
 
 main();
 async function main(){
@@ -404,7 +407,9 @@ async function main(){
     REG = await (await fetch(ROOT+'registry.json')).json();   // 단일 소스
   }catch(e){ return showHint(); }
   REG.areas.forEach(a => { byId[a.id]=a; a._title0=a.title; if(nameOverrides[a.id]) a.title=nameOverrides[a.id]; });
+  document.querySelector('.side h1').textContent = REG.profile==='research' ? '연구 하네스' : '관리 하네스';   // 프로필별 종류 표시
   try{ MANIFEST = await (await fetch('manifest.json')).json(); }catch(e){ MANIFEST = {}; }
+  try{ const z = await (await fetch('sizes.json')).json(); SIZES = { leaves:z.leaves||{}, budget:z.budget||(REG.token_budget||1e6)*4 }; }catch(e){ SIZES = { leaves:{}, budget:(REG.token_budget||1e6)*4 }; }
   pos = loadPositions() || autoLayout();
   buildMindmap();
   document.querySelectorAll('.tab').forEach(t=>t.onclick=()=>switchTab(t));
@@ -521,7 +526,13 @@ function nodeHtml(a){
   let html = `<div class="t">${a.title}</div>`;
   if(a.role==='leaf' && (a.ssot||[]).some(isShared))
     html+=`<div class="badge">${icon('share','ic-badge')}공유 ssot</div>`;
-  // 크기/분열 신호는 node check-registry.mjs 가 실파일에서 계산(손기입 토큰 게이지 제거)
+  // 텍스트 용량 게이지 — check-registry 가 실파일에서 계산해 web/sizes.json 으로 emit(자동)
+  if(a.role==='leaf' && typeof (SIZES.leaves||{})[a.id]==='number'){
+    const b=SIZES.leaves[a.id], pct=Math.min(100, b/SIZES.budget*100);
+    const col = pct>=100?'#f85149' : pct>=80?'#d29922' : 'var(--accent)';
+    html+=`<div class="gauge" title="텍스트 용량 ${fmtBytes(b)} / 예산 ${fmtBytes(SIZES.budget)} · ${pct.toFixed(0)}%"><i style="width:${pct.toFixed(1)}%;background:${col};"></i></div>`;
+    html+=`<div class="r">${fmtBytes(b)} · ${pct.toFixed(0)}%</div>`;
+  }
   return html;
 }
 function placeNode(n,id){ n.style.left=pos[id].x+'px'; n.style.top=pos[id].y+'px'; }
@@ -711,6 +722,7 @@ async function openModal(href,name,meta){
   const e=extOf(href);
   if(IMG_EXT.includes(e)){ metaEl.textContent=meta||"이미지"; const im=document.createElement("img"); im.className="m-img"; im.src=href; im.alt=name; body.replaceChildren(im); return; }
   if(e==="pdf"){ metaEl.textContent=meta||"PDF"; const fr=document.createElement("iframe"); fr.className="m-frame"; fr.src=href; body.replaceChildren(fr); return; }
+  if(e==="html"||e==="htm"){ metaEl.textContent=meta||"보고서"; const fr=document.createElement("iframe"); fr.className="m-frame"; fr.src=href; body.replaceChildren(fr); return; }   // 보고서: 소스 말고 렌더된 본문
   if(BIN_EXT.includes(e)){ metaEl.textContent=meta||e.toUpperCase(); body.innerHTML=`<div class="note">미리보기를 지원하지 않는 형식입니다 (.${e}). 상단 「원본」으로 여세요.</div>`; return; }
   try{
     const txt=await (await fetch(href)).text();
@@ -984,8 +996,8 @@ let autoEn=JSON.parse(localStorage.getItem(AUTO_EN_KEY)||'{}');
 let autoReq=JSON.parse(localStorage.getItem(AUTO_REQ_KEY)||'[]');
 const saveAutoEn=()=>{try{localStorage.setItem(AUTO_EN_KEY,JSON.stringify(autoEn));}catch(e){}};
 const saveAutoReq=()=>{try{localStorage.setItem(AUTO_REQ_KEY,JSON.stringify(autoReq));}catch(e){}};
-const TYPE_KO={action:'액션',cron:'크론',trigger:'트리거'};
-const TYPE_COL={action:'#58a6ff',cron:'#7ee787',trigger:'#f0883e'};
+const TYPE_KO={loop:'루프',action:'액션',cron:'크론',trigger:'트리거'};
+const TYPE_COL={loop:'#39c5cf',action:'#58a6ff',cron:'#7ee787',trigger:'#f0883e'};
 const ENG_KO={ai:'AI',code:'코드'};
 const ENG_COL={ai:'#bc8cff',code:'#8b949e'};
 const isOn=a=> (a.id in autoEn) ? autoEn[a.id] : a.enabled;   // 오버레이 우선
@@ -996,7 +1008,7 @@ const chip=(txt,col)=>`<span class="chipt" style="color:${col};border-color:${co
 
 function autoCardHtml(a){
   const col=TYPE_COL[a.type]||'#8b949e';
-  const sched=a.type==='cron'?a.schedule : a.type==='trigger'? a.when : '수동 실행';
+  const sched=a.type==='cron'?a.schedule : a.type==='trigger'? a.when : a.type==='loop'? ('/loop '+(a.cadence||'자기조절')) : '수동 실행';
   const lr=lastRun(a);
   const sub=[ a.area?('대상: '+(byId[a.area]?.title||a.area)):'대상: 전체', sched, lr?('마지막: '+lr):'이력 없음' ].join('  ·  ');
   return `<div class="auto-card ${isOn(a)?'':'off'} ${a.id===autoSel?'sel':''}" data-id="${a.id}" style="border-left:3px solid ${col}">
@@ -1019,19 +1031,20 @@ async function renderAutomation(){
   const dash=`<div class="dash">
     ${stat(AUTOS.length,'전체')}
     ${stat(on,'켜짐','var(--ok)',`/ ${AUTOS.length}`)}
+    ${cnt('loop')?stat(cnt('loop'),'루프',TYPE_COL.loop):''}
     ${stat(cnt('cron'),'크론',TYPE_COL.cron)}
     ${stat(cnt('trigger'),'트리거',TYPE_COL.trigger)}
     ${stat(cnt('action'),'액션',TYPE_COL.action)}
     ${pend?stat(pend,'대기','var(--warn)'):''}
   </div>`;
-  const groups=['cron','trigger','action'].filter(cnt).map(t=>
+  const groups=['loop','cron','trigger','action'].filter(cnt).map(t=>
     `<div class="grp-h"><span class="gdot" style="background:${TYPE_COL[t]}"></span>${TYPE_KO[t]}<span class="gc">${cnt(t)}개</span></div>`
     + AUTOS.filter(a=>a.type===t).map(autoCardHtml).join('')
   ).join('');
   const body = AUTOS.length ? (dash+groups) : `<div class="empty">automation.json 이 비어있습니다. Claude Code 에게 자동화를 만들어 달라고 하세요.</div>`;
   document.getElementById('main').innerHTML=
     `<div class="auto-wrap"><div class="auto-h">자동화</div>
-     <div class="auto-hsub">크론·트리거·액션 (AI 또는 코드). 정의는 Claude Code 가 만들고 여기서 관리.</div>
+     <div class="auto-hsub">루프(/loop)·크론·트리거·액션. 정의는 Claude Code 가 만들고 여기서 관리 — 어떤 루프가 도는지(켜짐/마지막 실행)도 여기서 확인.</div>
      ${body}</div>`;
   document.querySelectorAll('.auto-card').forEach(c=>c.onclick=e=>{
     const tg=e.target.closest('[data-tog]');
@@ -1057,6 +1070,7 @@ function renderAutoDetail(id){
     <div class="row"><span class="k">대상</span><span>${a.area?(byId[a.area]?.title||a.area):'전체 하네스'}</span></div>`;
   if(a.type==='cron')    h+=`<div class="row"><span class="k">스케줄</span><span class="v">${esc(a.schedule||'')}</span></div>`;
   if(a.type==='trigger') h+=`<div class="row"><span class="k">조건</span><span class="v">${esc(a.when||'')}</span></div>`;
+  if(a.type==='loop')    h+=`<div class="row"><span class="k">주기</span><span class="v">/loop ${esc(a.cadence||'자기조절')}</span></div>`;
   if(a.engine==='ai'){
     h+=`<div class="row"><span class="k">모델</span><span class="v">${esc(a.model||'claude-opus-4-8')}</span></div>
         <div class="prompt">${esc(a.prompt||'')}</div>`;
@@ -1224,6 +1238,24 @@ async function renderLog(){
   document.getElementById('panel').innerHTML='<div class="empty">기록 단일 소스: logs/log.jsonl</div>';
 }
 
+// ===== 보고서 (reports) — 목록은 reports/reports.json, 본문은 HTML(모달 iframe). 단일 소스 = 파일. =====
+async function renderReports(){
+  let data;
+  try{ data=await (await fetch(ROOT+'reports/reports.json')).json(); }catch(e){ data={reports:[]}; }
+  const rs=(data.reports||[]).slice().sort((a,b)=>(b.date||'').localeCompare(a.date||''));
+  const meta=r=>(r.date||'')+(r.area?(' · '+(byId[r.area]?.title||r.area)):'');
+  const cards = rs.length ? rs.map(r=>
+    `<a class="file" data-href="${ROOT}reports/${r.file}" data-name="${esc(r.title||r.file)}" data-meta="${esc(meta(r))}">
+      ${esc(r.title||r.file)}<span class="meta">${esc(meta(r))}${r.summary?(' — '+esc(r.summary)):''}</span></a>`
+  ).join('') : `<div class="empty">아직 보고서가 없습니다. <code>reports/_template.html</code> 을 복사해 만들고 <code>reports/reports.json</code> 에 한 줄 추가하세요.</div>`;
+  document.getElementById('main').innerHTML=
+    `<div class="auto-wrap"><div class="auto-h">보고서</div>
+     <div class="auto-hsub">HTML 보고서. 단일 소스 <code>reports/reports.json</code> · 클릭하면 본문을 봅니다.</div>
+     ${cards}</div>`;
+  document.querySelectorAll('#main [data-href]').forEach(el=>el.onclick=()=>openModal(el.dataset.href, el.dataset.name, el.dataset.meta||''));
+  document.getElementById('panel').innerHTML='<div class="empty">새 보고서: reports/_template.html 복사 → reports.json 에 한 줄.</div>';
+}
+
 function switchTab(t){
   document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
   t.classList.add('active');
@@ -1232,6 +1264,7 @@ function switchTab(t){
   if(t.dataset.tab==='auto'){ renderAutomation(); return; }
   if(t.dataset.tab==='settings'){ renderSettings(); return; }
   if(t.dataset.tab==='log'){ renderLog(); return; }
+  if(t.dataset.tab==='reports'){ renderReports(); return; }
 }
 
 function showHint(){

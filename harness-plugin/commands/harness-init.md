@@ -8,7 +8,7 @@ allowed-tools: Bash, Read, Write, Glob
 ## 절차
 1. 루트에 `registry.json` 이 이미 있으면 **중단** — 이미 하네스다(`/harness-status` 안내). 덮어쓰지 마라.
 2. 플러그인 템플릿을 복사한다(없는 것만, 기존 파일 보존):
-   - `${CLAUDE_PLUGIN_ROOT}/template/` 의 `registry.json` · `GLOBAL.md` · `check-registry.mjs` · `web/` · `Harness Ops Design System/` · `_ssot/` · `schedule/` · `automation/` · `logs/` 를 저장소 루트로 복사.
+   - `${CLAUDE_PLUGIN_ROOT}/template/` 의 `registry.json` · `GLOBAL.md` · `check-registry.mjs` · `web/` · `Harness Ops Design System/` · `_ssot/` · `schedule/` · `automation/` · `logs/` · `reports/` 를 저장소 루트로 복사.
    - 복사는 `cp` 로 하되, 루트에 같은 이름이 있으면 건너뛴다.
 3. `GLOBAL.md` 와 `registry.json` 의 `updated`/`ts` 가 `TODO` 면 오늘 날짜로 채운다. `logs/log.jsonl` 의 placeholder 줄도 오늘 날짜로.
 4. `node check-registry.mjs` 실행 → 통과 확인(exit 0).

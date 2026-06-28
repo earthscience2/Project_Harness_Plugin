@@ -8,7 +8,7 @@
   "plugins": [
     {
       "name": "area-harness",
-      "description": "빈/기존 프로젝트를 영역·일정·자동화·로그로 관리. init·adopt·area·status.",
+      "description": "빈/기존 프로젝트를 영역·일정·자동화·로그로 관리. init·adopt·area·status + 연구용 research-init(고정 6영역·런 원장·HTML 보고서).",
       "source": "./harness-plugin",
       "category": "productivity"
     }

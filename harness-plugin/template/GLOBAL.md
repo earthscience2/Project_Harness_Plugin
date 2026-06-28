@@ -48,7 +48,7 @@ updated: TODO
 5. 분열은 의미가 갈릴 때 먼저, 그리고 검사기가 예산 초과를 경고할 때.
 
 ## 사이드바 (web/index.html)
-- **영역**: 마인드맵. **일정**: `schedule/`. **자동화**: `automation/`. **로그**: `logs/log.jsonl`. **설정**: 키(브라우저 localStorage).
+- **영역**: 마인드맵. **일정**: `schedule/`. **자동화**: `automation/`. **로그**: `logs/log.jsonl`. **보고서**: `reports/`(HTML). **설정**: 키(브라우저 localStorage).
 
 ## 변경 이력
 > 최근 5개만 유지.

@@ -25,7 +25,7 @@ ok(entry, `marketplace.json: '${plugin.name}' 항목 존재`);
 ok(entry && existsSync(join(ROOT, entry.source)), `marketplace source 경로 존재 (${entry?.source})`);
 
 // 명령어 파일이 실재하는지
-for (const c of ['harness-init', 'harness-adopt', 'harness-area', 'harness-status'])
+for (const c of ['harness-init', 'harness-adopt', 'harness-area', 'harness-status', 'harness-research-init'])
   ok(existsSync(join(PLUGIN, 'commands', `${c}.md`)), `command: ${c}.md`);
 
 // ② /harness-init 산출물 → check-registry exit 0

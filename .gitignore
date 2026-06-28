@@ -2,6 +2,10 @@ node_modules/
 *.log
 .DS_Store
 Thumbs.db
+# 로컬 init/adopt 테스트 샌드박스
+/test-init/
+/test-adopt/
+/test-research/
 # OneDrive 핸들 잠김으로 남은 빈 껍데기 (삭제 예정)
 /SMARTCS-Displacement_Detection/
 /test-blank/
