@@ -47,7 +47,7 @@
   .side .mini:hover{background:var(--surface-2);color:var(--text);}
   .side .help{font-size:10px;color:var(--dim);padding:0 12px;line-height:1.6;}
   /* main = viewport (pan/zoom) */
-  .main{flex:1;overflow:hidden;position:relative;cursor:grab;}
+  .main{flex:1;min-width:0;overflow:hidden;position:relative;cursor:grab;}
   .main.panning{cursor:grabbing;}
   .canvas{position:absolute;top:0;left:0;transform-origin:0 0;}
   svg.edges{position:absolute;top:0;left:0;overflow:visible;pointer-events:none;}
@@ -102,6 +102,12 @@
   /* panel */
   .panel{width:320px;flex:none;background:var(--surface);border-left:1px solid var(--border);
     padding:20px;overflow:auto;}
+  /* 일정 탭만 넓게 + 좌측 경계를 끌어 폭 조절(--sched-pw 는 JS 가 저장/복원) */
+  body[data-tab="schedule"] .panel{width:var(--sched-pw,640px);}
+  .panel-rsz{display:none;}
+  body[data-tab="schedule"] .panel-rsz{display:block;position:fixed;top:0;bottom:0;
+    right:var(--sched-pw,640px);width:8px;margin-right:-4px;cursor:ew-resize;z-index:40;}
+  .panel-rsz:hover{background:var(--accent);opacity:.35;}
   .panel h2{font-size:16px;margin:0 0 4px;}
   .pnl-head{display:flex;align-items:center;gap:6px;}
   .rename-btn{flex:none;border:none;background:transparent;color:var(--dim);cursor:pointer;padding:2px;border-radius:6px;display:inline-flex;}
@@ -340,10 +346,12 @@
     <div class="tab" data-tab="reports"><svg class="ic ic-tab" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8l-5-5Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M14 3v5h5M9 13h6M9 17h5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>보고서</div>
     <div class="tab" data-tab="settings"><svg class="ic ic-tab" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" stroke="currentColor" stroke-width="2"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>설정</div>
     <div class="spacer"></div>
+    <div class="mini" id="refresh"><svg class="ic ic-mini" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21 12a9 9 0 1 1-2.64-6.36M21 3v6h-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>새로고침</div>
     <div class="mini" id="reset"><svg class="ic ic-mini" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 20C9.76667 20 7.875 19.225 6.325 17.675C4.775 16.125 4 14.2333 4 12C4 9.76667 4.775 7.875 6.325 6.325C7.875 4.775 9.76667 4 12 4C13.15 4 14.25 4.2375 15.3 4.7125C16.35 5.1875 17.25 5.86667 18 6.75V5C18 4.71667 18.0958 4.47917 18.2875 4.2875C18.4792 4.09583 18.7167 4 19 4C19.2833 4 19.5208 4.09583 19.7125 4.2875C19.9042 4.47917 20 4.71667 20 5V10C20 10.2833 19.9042 10.5208 19.7125 10.7125C19.5208 10.9042 19.2833 11 19 11H14C13.7167 11 13.4792 10.9042 13.2875 10.7125C13.0958 10.5208 13 10.2833 13 10C13 9.71667 13.0958 9.47917 13.2875 9.2875C13.4792 9.09583 13.7167 9 14 9H17.2C16.6667 8.06667 15.9375 7.33333 15.0125 6.8C14.0875 6.26667 13.0833 6 12 6C10.3333 6 8.91667 6.58333 7.75 7.75C6.58333 8.91667 6 10.3333 6 12C6 13.6667 6.58333 15.0833 7.75 16.25C8.91667 17.4167 10.3333 18 12 18C13.1333 18 14.1708 17.7125 15.1125 17.1375C16.0542 16.5625 16.7833 15.7917 17.3 14.825C17.4333 14.5917 17.6208 14.4292 17.8625 14.3375C18.1042 14.2458 18.35 14.2417 18.6 14.325C18.8667 14.4083 19.0583 14.5833 19.175 14.85C19.2917 15.1167 19.2833 15.3667 19.15 15.6C18.4667 16.9333 17.4917 18 16.225 18.8C14.9583 19.6 13.55 20 12 20Z" fill="currentColor"/></svg>배치 초기화</div>
     <div class="help">빈 곳 드래그=이동 · 휠=확대/축소 · 셀 드래그=위치 이동</div>
   </nav>
   <div class="main" id="main"></div>
+  <div class="panel-rsz" id="panel-rsz" title="드래그하여 폭 조절"></div>
   <aside class="panel" id="panel"><div class="empty">셀을 클릭하면 파일이 보입니다.</div></aside>
 
   <div class="overlay" id="overlay">
@@ -419,6 +427,12 @@ async function main(){
   buildMindmap();
   document.querySelectorAll('.tab').forEach(t=>t.onclick=()=>switchTab(t));
   document.getElementById('reset').onclick = resetLayout;
+  document.getElementById('refresh').onclick = ()=>location.reload();   // 디스크에서 다시 읽기(모든 탭)
+  initPanelResize();
+  // 새로고침 후에도 마지막 탭 유지
+  const savedTab=localStorage.getItem(TAB_KEY)||'area';
+  document.body.dataset.tab=savedTab;
+  if(savedTab!=='area'){ const el=document.querySelector(`.tab[data-tab="${savedTab}"]`); if(el) switchTab(el); }
   // file click → modal (delegated; bridge child rows have no data-href → ignored)
   document.getElementById('panel').addEventListener('click', e=>{
     const dd=e.target.closest('.tree .d');
@@ -916,12 +930,13 @@ function monthBlock(by,bm,todayStr){       // 한 달 그리드(제목+요일+42
     const d=new Date(start); d.setDate(start.getDate()+i);
     const y=d.getFullYear(), m=d.getMonth(), day=d.getDate(), ds=fmt(y,m,day), dow=d.getDay();
     const evs=eventsOn(ds);
-    let chips=evs.slice(0,2).map(e=>{
+    const cap=calMode===1?4:2;                 // 1달 보기는 더 촘촘하게(4), 1년 보기는 2
+    let chips=evs.slice(0,cap).map(e=>{
       const dn=doneSet.has(e.id), role=evRole(e,ds), col=dn?'#8b949e':CAT[catOf(e)].col;
       const label=(role==='start'||role==='single')?esc(e.title):'&nbsp;';   // 이어지는 날은 색 막대만(같은 색으로 추적)
       return `<div class="chip r-${role} ${dn?'done':''}" data-ev="${e.id}" title="${esc(e.title)}" style="--cc:${col};background:${col}22;border-color:${col}">${label}</div>`;
     }).join('');
-    if(evs.length>2) chips+=`<div class="chip-more">+${evs.length-2}</div>`;
+    if(evs.length>cap) chips+=`<div class="chip-more">+${evs.length-cap}</div>`;
     cells+=`<div class="cal-cell ${m!==bm?'other':''} ${ds===todayStr?'today':''} ${ds===selDate?'sel':''}" data-date="${ds}">
       <div class="cal-date ${dow===0?'sun':''} ${dow===6?'sat':''}">${day}</div>${chips}</div>`;
   }
@@ -1356,9 +1371,33 @@ async function renderReports(){
   document.getElementById('panel').innerHTML='<div class="empty">새 보고서: reports/_template.html 복사 → reports.json 에 한 줄(type 포함).</div>';
 }
 
+// 일정 패널 폭 조절 — 좌측 경계 핸들 드래그, localStorage 저장(ponytail: CSS 변수 한 개)
+const PW_KEY='area-harness-sched-pw';
+function initPanelResize(){
+  const saved=+localStorage.getItem(PW_KEY);
+  if(saved) document.body.style.setProperty('--sched-pw',saved+'px');
+  const h=document.getElementById('panel-rsz');
+  h.addEventListener('mousedown',e=>{
+    e.preventDefault();
+    const move=ev=>{
+      const w=Math.max(320, Math.min(window.innerWidth-360, window.innerWidth-ev.clientX));
+      document.body.style.setProperty('--sched-pw',w+'px');
+    };
+    const up=()=>{
+      document.removeEventListener('mousemove',move); document.removeEventListener('mouseup',up);
+      const w=parseInt(getComputedStyle(document.body).getPropertyValue('--sched-pw'))||640;
+      try{ localStorage.setItem(PW_KEY,w); }catch(e){}
+    };
+    document.addEventListener('mousemove',move); document.addEventListener('mouseup',up);
+  });
+}
+
+const TAB_KEY='area-harness-tab';
 function switchTab(t){
   document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
   t.classList.add('active');
+  document.body.dataset.tab=t.dataset.tab;
+  try{ localStorage.setItem(TAB_KEY,t.dataset.tab); }catch(e){}
   if(t.dataset.tab==='area'){ buildMindmap(); return; }
   if(t.dataset.tab==='schedule'){ renderSchedule(); return; }
   if(t.dataset.tab==='auto'){ renderAutomation(); return; }
