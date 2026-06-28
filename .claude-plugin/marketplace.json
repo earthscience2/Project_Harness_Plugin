@@ -1,0 +1,16 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "area-harness",
+  "description": "영역(Area) 하네스 — 코드 무이동 오버레이 SSOT 구조 플러그인.",
+  "owner": {
+    "name": "slhg1"
+  },
+  "plugins": [
+    {
+      "name": "area-harness",
+      "description": "빈/기존 프로젝트를 영역·일정·자동화·로그로 관리. init·adopt·area·status.",
+      "source": "./harness-plugin",
+      "category": "productivity"
+    }
+  ]
+}

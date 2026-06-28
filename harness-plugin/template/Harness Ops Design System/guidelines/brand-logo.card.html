@@ -1,0 +1,35 @@
+<!-- @dsCard group="Brand" viewport="700x180" name="로고 락업" subtitle="Harness Ops 마크 + 워드마크 (dark / light)" -->
+<!doctype html>
+<html lang="ko" data-theme="dark">
+<head>
+<meta charset="utf-8" />
+<link rel="stylesheet" href="../styles.css" />
+<style>
+  body { margin: 0; padding: 0; background: var(--bg-canvas); display: grid; grid-template-columns: 1fr 1fr; height: 180px; }
+  .pane { display: flex; align-items: center; justify-content: center; gap: 12px; }
+  .light { background: #f1f1f2; }
+  .lock { display: flex; align-items: center; gap: 11px; }
+  .mark { width: 30px; height: 30px; }
+  .word { font-family: var(--font-sans); font-weight: 700; font-size: 21px; letter-spacing: -0.01em; }
+  .ops { font-family: var(--font-mono); font-weight: 500; font-size: 13px; padding: 2px 6px; border-radius: var(--radius-sm); }
+  .dark .word { color: #ededf0; } .dark .ops { color: #6fc3b0; background: rgba(69,160,140,0.14); }
+  .light .word { color: #18181b; } .light .ops { color: #2f7e6b; background: rgba(69,160,140,0.12); }
+</style>
+</head>
+<body>
+  <div class="pane dark">
+    <div class="lock">
+      <img class="mark" src="../assets/logo-mark.svg" alt="" />
+      <span class="word">Harness</span>
+      <span class="ops">ops</span>
+    </div>
+  </div>
+  <div class="pane light">
+    <div class="lock">
+      <img class="mark" src="../assets/logo-mark.svg" alt="" />
+      <span class="word">Harness</span>
+      <span class="ops">ops</span>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,38 @@
+/* ============================================================
+   Webfonts — loaded from CDN.
+   Pretendard (Korean UI) + JetBrains Mono (data / numeric).
+   NOTE: served over CDN; if you need fully offline binaries,
+   download the woff2 files and re-point these src URLs.
+   ============================================================ */
+
+/* Pretendard — variable, covers Latin + Hangul */
+@font-face {
+  font-family: 'Pretendard';
+  font-weight: 300 800;
+  font-style: normal;
+  font-display: swap;
+  src: url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/woff2/PretendardVariable.woff2') format('woff2-variations');
+}
+
+/* JetBrains Mono — numeric / identifiers / code */
+@font-face {
+  font-family: 'JetBrains Mono';
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  src: url('https://cdn.jsdelivr.net/fontsource/fonts/jetbrains-mono@latest/latin-400-normal.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'JetBrains Mono';
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+  src: url('https://cdn.jsdelivr.net/fontsource/fonts/jetbrains-mono@latest/latin-500-normal.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'JetBrains Mono';
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+  src: url('https://cdn.jsdelivr.net/fontsource/fonts/jetbrains-mono@latest/latin-700-normal.woff2') format('woff2');
+}

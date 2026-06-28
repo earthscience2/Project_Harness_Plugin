@@ -1,0 +1,33 @@
+<!-- @dsCard group="Colors" viewport="700x150" name="중립 그레이 램프" subtitle="Hueless neutral scale — the foundation of every surface" -->
+<!doctype html>
+<html lang="ko" data-theme="dark">
+<head>
+<meta charset="utf-8" />
+<link rel="stylesheet" href="../styles.css" />
+<style>
+  body { margin: 0; padding: 18px; background: var(--bg-canvas); }
+  .ramp { display: grid; grid-template-columns: repeat(14, 1fr); gap: 6px; }
+  .sw { display: flex; flex-direction: column; gap: 6px; }
+  .chip { height: 56px; border-radius: var(--radius-sm); border: 1px solid var(--border-subtle); }
+  .name { font: var(--weight-medium) var(--text-2xs)/1.2 var(--font-mono); color: var(--text-tertiary); text-align: center; }
+</style>
+</head>
+<body>
+  <div class="ramp">
+    <div class="sw"><div class="chip" style="background:var(--n-0)"></div><div class="name">0</div></div>
+    <div class="sw"><div class="chip" style="background:var(--n-50)"></div><div class="name">50</div></div>
+    <div class="sw"><div class="chip" style="background:var(--n-100)"></div><div class="name">100</div></div>
+    <div class="sw"><div class="chip" style="background:var(--n-150)"></div><div class="name">150</div></div>
+    <div class="sw"><div class="chip" style="background:var(--n-200)"></div><div class="name">200</div></div>
+    <div class="sw"><div class="chip" style="background:var(--n-300)"></div><div class="name">300</div></div>
+    <div class="sw"><div class="chip" style="background:var(--n-400)"></div><div class="name">400</div></div>
+    <div class="sw"><div class="chip" style="background:var(--n-500)"></div><div class="name">500</div></div>
+    <div class="sw"><div class="chip" style="background:var(--n-600)"></div><div class="name">600</div></div>
+    <div class="sw"><div class="chip" style="background:var(--n-700)"></div><div class="name">700</div></div>
+    <div class="sw"><div class="chip" style="background:var(--n-800)"></div><div class="name">800</div></div>
+    <div class="sw"><div class="chip" style="background:var(--n-900)"></div><div class="name">900</div></div>
+    <div class="sw"><div class="chip" style="background:var(--n-950)"></div><div class="name">950</div></div>
+    <div class="sw"><div class="chip" style="background:var(--n-1000)"></div><div class="name">1000</div></div>
+  </div>
+</body>
+</html>

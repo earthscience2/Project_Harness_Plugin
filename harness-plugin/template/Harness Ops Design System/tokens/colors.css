@@ -1,0 +1,179 @@
+/* ============================================================
+   COLORS — neutral-grey foundation, calm desaturated accents.
+   Dark is the default (:root). Light mode via [data-theme="light"].
+   Accent ramp swappable via [data-accent="teal|blue|amber|violet"]
+   (teal is the default baked into :root).
+   ============================================================ */
+
+:root {
+  /* --- Neutral ramp (hueless) — raw scale --- */
+  --n-0:   #09090a;
+  --n-50:  #0e0e10;
+  --n-100: #141416;
+  --n-150: #1a1a1d;
+  --n-200: #202023;
+  --n-300: #2a2a2e;
+  --n-400: #34343a;
+  --n-500: #45454c;
+  --n-600: #5c5c64;
+  --n-700: #7a7a82;
+  --n-800: #9a9aa1;
+  --n-900: #c4c4c9;
+  --n-950: #ededf0;
+  --n-1000:#ffffff;
+
+  /* --- Surfaces (dark) --- */
+  --bg-app:        var(--n-0);     /* outermost app background */
+  --bg-canvas:     var(--n-50);    /* working canvas / page */
+  --surface-1:     var(--n-100);   /* cards, panels */
+  --surface-2:     var(--n-150);   /* raised / nested */
+  --surface-3:     var(--n-200);   /* inputs, wells */
+  --surface-hover: rgba(255,255,255,0.04);
+  --surface-active:rgba(255,255,255,0.07);
+  --surface-sel:   rgba(69,160,140,0.10); /* selected row tint (accent) */
+  --overlay-scrim: rgba(0,0,0,0.62);
+
+  /* --- Borders --- */
+  --border-subtle:  #202023;
+  --border-default: #2c2c31;
+  --border-strong:  #3c3c43;
+  --border-focus:   var(--accent);
+
+  /* --- Text --- */
+  --text-primary:   #ededf0;
+  --text-secondary: #a6a6ad;
+  --text-tertiary:  #74747b;
+  --text-disabled:  #54545a;
+  --text-inverse:   #09090a;
+  --text-link:      var(--accent-text);
+
+  /* --- Accent (teal default; overridable by [data-accent]) --- */
+  --accent:         #45a08c;
+  --accent-hover:   #56b29d;
+  --accent-active:  #3b8a78;
+  --accent-contrast:#06120f;            /* fg on a filled accent surface */
+  --accent-text:    #6fc3b0;            /* accent used as text on dark */
+  --accent-soft:    rgba(69,160,140,0.14);
+  --accent-soft-hover: rgba(69,160,140,0.20);
+  --accent-border:  rgba(69,160,140,0.42);
+  --accent-ring:    rgba(69,160,140,0.34);
+
+  /* --- Status (muted, non-neon) --- */
+  --success:        #5d9e72;
+  --success-text:   #84c197;
+  --success-soft:   rgba(93,158,114,0.14);
+  --success-border: rgba(93,158,114,0.40);
+
+  --warning:        #c79a4e;
+  --warning-text:   #dab673;
+  --warning-soft:   rgba(199,154,78,0.14);
+  --warning-border: rgba(199,154,78,0.40);
+
+  --danger:         #c96a6a;
+  --danger-text:    #e08c8c;
+  --danger-soft:    rgba(201,106,106,0.14);
+  --danger-border:  rgba(201,106,106,0.42);
+
+  --info:           #5f8bc4;
+  --info-text:      #88abd7;
+  --info-soft:      rgba(95,139,196,0.14);
+  --info-border:    rgba(95,139,196,0.40);
+
+  --neutral-status:      #7a7a82;
+  --neutral-status-text: #a6a6ad;
+  --neutral-soft:        rgba(122,122,130,0.16);
+  --neutral-border:      rgba(122,122,130,0.36);
+
+  /* --- Data-viz sequence (calm) --- */
+  --viz-1: #45a08c;
+  --viz-2: #5f8bc4;
+  --viz-3: #c79a4e;
+  --viz-4: #a487c0;
+  --viz-5: #c96a6a;
+  --viz-6: #6fae9c;
+  --viz-grid: var(--border-subtle);
+  --viz-track: var(--surface-3);
+}
+
+/* ============================================================
+   ACCENT VARIANTS — set data-accent on <html> or any container.
+   Each keeps the same neutral foundation; only accent vars change.
+   ============================================================ */
+[data-accent="blue"] {
+  --accent:         #5f8bc4;
+  --accent-hover:   #6f9ad0;
+  --accent-active:  #517bb1;
+  --accent-contrast:#06101c;
+  --accent-text:    #8fb1de;
+  --accent-soft:    rgba(95,139,196,0.14);
+  --accent-soft-hover: rgba(95,139,196,0.20);
+  --accent-border:  rgba(95,139,196,0.42);
+  --accent-ring:    rgba(95,139,196,0.34);
+  --surface-sel:    rgba(95,139,196,0.10);
+}
+[data-accent="amber"] {
+  --accent:         #c79a4e;
+  --accent-hover:   #d6aa5e;
+  --accent-active:  #ad8540;
+  --accent-contrast:#1a1206;
+  --accent-text:    #ddbb78;
+  --accent-soft:    rgba(199,154,78,0.14);
+  --accent-soft-hover: rgba(199,154,78,0.20);
+  --accent-border:  rgba(199,154,78,0.42);
+  --accent-ring:    rgba(199,154,78,0.32);
+  --surface-sel:    rgba(199,154,78,0.10);
+}
+[data-accent="violet"] {
+  --accent:         #9580bb;
+  --accent-hover:   #a691c9;
+  --accent-active:  #806ba6;
+  --accent-contrast:#0f0a18;
+  --accent-text:    #b8a6d6;
+  --accent-soft:    rgba(149,128,187,0.15);
+  --accent-soft-hover: rgba(149,128,187,0.22);
+  --accent-border:  rgba(149,128,187,0.42);
+  --accent-ring:    rgba(149,128,187,0.34);
+  --surface-sel:    rgba(149,128,187,0.11);
+}
+
+/* ============================================================
+   LIGHT MODE — [data-theme="light"]. Neutral foundation inverts;
+   accent stays mid-tone (legible on both). Status text darkens.
+   ============================================================ */
+[data-theme="light"] {
+  --bg-app:        #f1f1f2;
+  --bg-canvas:     #f7f7f8;
+  --surface-1:     #ffffff;
+  --surface-2:     #fafafb;
+  --surface-3:     #f0f0f1;
+  --surface-hover: rgba(0,0,0,0.035);
+  --surface-active:rgba(0,0,0,0.06);
+  --surface-sel:   rgba(69,160,140,0.10);
+  --overlay-scrim: rgba(20,20,22,0.40);
+
+  --border-subtle:  #ececed;
+  --border-default: #e0e0e2;
+  --border-strong:  #c9c9cd;
+
+  --text-primary:   #18181b;
+  --text-secondary: #56565c;
+  --text-tertiary:  #86868d;
+  --text-disabled:  #aeaeb4;
+  --text-inverse:   #ffffff;
+
+  --accent-text:    #2f7e6b;
+  --accent-contrast:#ffffff;
+
+  --success-text:   #3f7d54;
+  --warning-text:   #946d29;
+  --danger-text:    #b14a4a;
+  --info-text:      #406ba6;
+  --neutral-status-text: #6a6a71;
+
+  --viz-grid: var(--border-default);
+  --viz-track: #ededee;
+}
+/* light + accent variants: re-tone the as-text color for contrast */
+[data-theme="light"][data-accent="blue"]   { --accent-text: #3f679e; }
+[data-theme="light"][data-accent="amber"]  { --accent-text: #8a6526; }
+[data-theme="light"][data-accent="violet"] { --accent-text: #6b549a; }

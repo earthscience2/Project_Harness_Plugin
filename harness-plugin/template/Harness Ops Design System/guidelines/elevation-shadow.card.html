@@ -1,0 +1,20 @@
+<!-- @dsCard group="Spacing" viewport="700x150" name="엘리베이션 (그림자)" subtitle="sm → lg + pop, restrained on dark" -->
+<!doctype html>
+<html lang="ko" data-theme="dark">
+<head>
+<meta charset="utf-8" />
+<link rel="stylesheet" href="../styles.css" />
+<style>
+  body { margin: 0; padding: 24px; background: var(--bg-canvas); display: flex; gap: 22px; align-items: center; justify-content: space-around; }
+  .col { display: flex; flex-direction: column; gap: 12px; align-items: center; }
+  .box { width: 100px; height: 60px; background: var(--surface-1); border: 1px solid var(--border-subtle); border-radius: var(--radius-lg); }
+  .t { font: var(--text-2xs)/1 var(--font-mono); color: var(--text-tertiary); }
+</style>
+</head>
+<body>
+  <div class="col"><div class="box" style="box-shadow:var(--shadow-sm)"></div><div class="t">shadow-sm</div></div>
+  <div class="col"><div class="box" style="box-shadow:var(--shadow-md)"></div><div class="t">shadow-md</div></div>
+  <div class="col"><div class="box" style="box-shadow:var(--shadow-lg)"></div><div class="t">shadow-lg</div></div>
+  <div class="col"><div class="box" style="box-shadow:var(--shadow-pop)"></div><div class="t">shadow-pop</div></div>
+</body>
+</html>

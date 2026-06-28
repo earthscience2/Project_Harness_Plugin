@@ -1,0 +1,33 @@
+<!-- @dsCard group="Colors" viewport="700x170" name="라이트 모드 미리보기" subtitle="data-theme=light — same tokens, inverted neutrals" -->
+<!doctype html>
+<html lang="ko" data-theme="light">
+<head>
+<meta charset="utf-8" />
+<link rel="stylesheet" href="../styles.css" />
+<style>
+  body { margin: 0; padding: 18px; background: var(--bg-canvas); }
+  .row { display: flex; gap: 10px; }
+  .sw { flex: 1; display: flex; flex-direction: column; gap: 7px; }
+  .chip { height: 50px; border-radius: var(--radius-md); border: 1px solid var(--border-default); }
+  .name { font: var(--weight-semibold) var(--text-xs)/1.2 var(--font-sans); color: var(--text-secondary); }
+  .tok { font: var(--text-2xs)/1.2 var(--font-mono); color: var(--text-tertiary); }
+  .status { display:flex; gap:8px; margin-top:14px; }
+  .pill { height:24px; padding:0 10px; border-radius: var(--radius-sm); display:flex; align-items:center; gap:6px; font: var(--weight-medium) var(--text-xs)/1 var(--font-sans); background: var(--surface-2); border:1px solid var(--border-subtle); }
+  .dot { width:7px; height:7px; border-radius:50%; }
+</style>
+</head>
+<body>
+  <div class="row">
+    <div class="sw"><div class="chip" style="background:var(--bg-app)"></div><div class="name">App</div><div class="tok">--bg-app</div></div>
+    <div class="sw"><div class="chip" style="background:var(--surface-1)"></div><div class="name">Surface 1</div><div class="tok">--surface-1</div></div>
+    <div class="sw"><div class="chip" style="background:var(--surface-3)"></div><div class="name">Surface 3</div><div class="tok">--surface-3</div></div>
+    <div class="sw"><div class="chip" style="background:var(--accent)"></div><div class="name">Accent</div><div class="tok">--accent</div></div>
+  </div>
+  <div class="status">
+    <span class="pill" style="color:var(--success-text)"><span class="dot" style="background:var(--success)"></span>통과</span>
+    <span class="pill" style="color:var(--danger-text)"><span class="dot" style="background:var(--danger)"></span>실패</span>
+    <span class="pill" style="color:var(--info-text)"><span class="dot" style="background:var(--info)"></span>실행 중</span>
+    <span class="pill" style="color:var(--warning-text)"><span class="dot" style="background:var(--warning)"></span>대기</span>
+  </div>
+</body>
+</html>

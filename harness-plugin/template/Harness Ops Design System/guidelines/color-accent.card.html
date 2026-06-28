@@ -1,0 +1,41 @@
+<!-- @dsCard group="Colors" viewport="700x150" name="액센트 — 틸 & 변형" subtitle="data-accent=teal(default) / blue / amber / violet" -->
+<!doctype html>
+<html lang="ko" data-theme="dark">
+<head>
+<meta charset="utf-8" />
+<link rel="stylesheet" href="../styles.css" />
+<style>
+  body { margin: 0; padding: 18px; background: var(--bg-canvas); }
+  .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+  .set { display: flex; flex-direction: column; gap: 7px; padding: 10px; border-radius: var(--radius-md); background: var(--surface-1); border: 1px solid var(--border-subtle); }
+  .swatches { display: flex; gap: 5px; }
+  .chip { height: 30px; flex: 1; border-radius: var(--radius-sm); }
+  .name { font: var(--weight-semibold) var(--text-xs)/1 var(--font-sans); color: var(--text-secondary); }
+  .btn { height: 28px; border-radius: var(--radius-sm); display:flex; align-items:center; justify-content:center; font: var(--weight-medium) var(--text-xs)/1 var(--font-sans); }
+</style>
+</head>
+<body>
+  <div class="grid">
+    <div class="set">
+      <div class="name">Teal · 기본</div>
+      <div class="swatches"><span class="chip" style="background:var(--accent)"></span><span class="chip" style="background:var(--accent-hover)"></span><span class="chip" style="background:var(--accent-soft)"></span></div>
+      <div class="btn" style="background:var(--accent);color:var(--accent-contrast)">실행</div>
+    </div>
+    <div class="set" data-accent="blue">
+      <div class="name">Blue</div>
+      <div class="swatches"><span class="chip" style="background:var(--accent)"></span><span class="chip" style="background:var(--accent-hover)"></span><span class="chip" style="background:var(--accent-soft)"></span></div>
+      <div class="btn" style="background:var(--accent);color:var(--accent-contrast)">실행</div>
+    </div>
+    <div class="set" data-accent="amber">
+      <div class="name">Amber</div>
+      <div class="swatches"><span class="chip" style="background:var(--accent)"></span><span class="chip" style="background:var(--accent-hover)"></span><span class="chip" style="background:var(--accent-soft)"></span></div>
+      <div class="btn" style="background:var(--accent);color:var(--accent-contrast)">실행</div>
+    </div>
+    <div class="set" data-accent="violet">
+      <div class="name">Violet</div>
+      <div class="swatches"><span class="chip" style="background:var(--accent)"></span><span class="chip" style="background:var(--accent-hover)"></span><span class="chip" style="background:var(--accent-soft)"></span></div>
+      <div class="btn" style="background:var(--accent);color:var(--accent-contrast)">실행</div>
+    </div>
+  </div>
+</body>
+</html>

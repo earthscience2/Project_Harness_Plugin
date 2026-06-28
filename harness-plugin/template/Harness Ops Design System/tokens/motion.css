@@ -1,0 +1,35 @@
+/* ============================================================
+   MOTION — restrained, functional. No bounce. Quick & calm.
+   ============================================================ */
+
+:root {
+  --duration-instant: 80ms;  /* @kind other */
+  --duration-fast:    120ms; /* @kind other */
+  --duration-base:    180ms; /* @kind other */
+  --duration-slow:    280ms; /* @kind other */
+  --duration-slower:  420ms; /* @kind other */
+
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1);   /* @kind other */
+  --ease-out:      cubic-bezier(0.16, 1, 0.3, 1); /* @kind other */
+  --ease-in:       cubic-bezier(0.4, 0, 1, 1);    /* @kind other */
+  --ease-in-out:   cubic-bezier(0.4, 0, 0.2, 1);  /* @kind other */
+
+  /* Common composite transitions */
+  --transition-colors: color var(--duration-fast) var(--ease-standard),
+                       background-color var(--duration-fast) var(--ease-standard),
+                       border-color var(--duration-fast) var(--ease-standard); /* @kind other */
+  --transition-control: background-color var(--duration-fast) var(--ease-standard),
+                       border-color var(--duration-fast) var(--ease-standard),
+                       box-shadow var(--duration-fast) var(--ease-standard),
+                       transform var(--duration-fast) var(--ease-standard); /* @kind other */
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --duration-instant: 0ms; /* @kind other */
+    --duration-fast: 0ms; /* @kind other */
+    --duration-base: 0ms; /* @kind other */
+    --duration-slow: 0ms; /* @kind other */
+    --duration-slower: 0ms; /* @kind other */
+  }
+}

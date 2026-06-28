@@ -1,0 +1,25 @@
+<!-- @dsCard group="Colors" viewport="700x150" name="시맨틱 상태 색" subtitle="success / warning / danger / info / neutral — muted, non-neon" -->
+<!doctype html>
+<html lang="ko" data-theme="dark">
+<head>
+<meta charset="utf-8" />
+<link rel="stylesheet" href="../styles.css" />
+<style>
+  body { margin: 0; padding: 18px; background: var(--bg-canvas); }
+  .grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; }
+  .col { display: flex; flex-direction: column; gap: 7px; }
+  .chip { height: 44px; border-radius: var(--radius-md); display:flex; align-items:center; justify-content:center; font: var(--weight-semibold) var(--text-xs)/1 var(--font-sans); }
+  .soft { height: 26px; border-radius: var(--radius-sm); display:flex; align-items:center; justify-content:center; font: var(--text-2xs)/1 var(--font-mono); }
+  .name { font: var(--weight-medium) var(--text-2xs)/1 var(--font-mono); color: var(--text-tertiary); }
+</style>
+</head>
+<body>
+  <div class="grid">
+    <div class="col"><div class="chip" style="background:var(--success);color:#08130c">통과</div><div class="soft" style="background:var(--success-soft);color:var(--success-text)">soft</div><div class="name">--success</div></div>
+    <div class="col"><div class="chip" style="background:var(--warning);color:#1a1206">대기</div><div class="soft" style="background:var(--warning-soft);color:var(--warning-text)">soft</div><div class="name">--warning</div></div>
+    <div class="col"><div class="chip" style="background:var(--danger);color:#fff">실패</div><div class="soft" style="background:var(--danger-soft);color:var(--danger-text)">soft</div><div class="name">--danger</div></div>
+    <div class="col"><div class="chip" style="background:var(--info);color:#06101c">정보</div><div class="soft" style="background:var(--info-soft);color:var(--info-text)">soft</div><div class="name">--info</div></div>
+    <div class="col"><div class="chip" style="background:var(--neutral-status);color:#0d0d0f">중립</div><div class="soft" style="background:var(--neutral-soft);color:var(--neutral-status-text)">soft</div><div class="name">--neutral</div></div>
+  </div>
+</body>
+</html>

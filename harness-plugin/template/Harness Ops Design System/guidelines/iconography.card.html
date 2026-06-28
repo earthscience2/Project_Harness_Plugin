@@ -1,0 +1,27 @@
+<!-- @dsCard group="Brand" viewport="700x180" name="아이코노그래피 — Lucide" subtitle="1.75 stroke line icons · 16/18/20px on the 24 grid" -->
+<!doctype html>
+<html lang="ko" data-theme="dark">
+<head>
+<meta charset="utf-8" />
+<link rel="stylesheet" href="../styles.css" />
+<style>
+  body { margin: 0; padding: 22px; background: var(--bg-canvas); }
+  .grid { display: grid; grid-template-columns: repeat(10, 1fr); gap: 16px; }
+  .cell { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+  .cell svg { width: 22px; height: 22px; color: var(--text-secondary); stroke-width: 1.75; }
+  .t { font: var(--text-2xs)/1 var(--font-mono); color: var(--text-tertiary); }
+</style>
+<script src="https://unpkg.com/lucide@0.469.0/dist/umd/lucide.js"></script>
+</head>
+<body>
+  <div class="grid" id="g"></div>
+  <script>
+    const names = ['play','square','rotate-cw','plus','search','filter','sliders-horizontal','check','x','chevron-down',
+      'circle-check','circle-x','circle-alert','clock','loader','git-branch','database','flask-conical','gauge','file-text',
+      'list','layout-dashboard','bell','settings','more-horizontal','download','copy','external-link','trash-2','user'];
+    const g = document.getElementById('g');
+    g.innerHTML = names.map(n => `<div class="cell"><i data-lucide="${n}"></i><span class="t">${n}</span></div>`).join('');
+    lucide.createIcons();
+  </script>
+</body>
+</html>

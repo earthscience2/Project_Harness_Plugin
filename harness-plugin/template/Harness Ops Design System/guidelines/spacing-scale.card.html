@@ -1,0 +1,24 @@
+<!-- @dsCard group="Spacing" viewport="700x160" name="스페이싱 스케일" subtitle="4px base grid · space-1 … space-16" -->
+<!doctype html>
+<html lang="ko" data-theme="dark">
+<head>
+<meta charset="utf-8" />
+<link rel="stylesheet" href="../styles.css" />
+<style>
+  body { margin: 0; padding: 20px; background: var(--bg-canvas); display: flex; flex-direction: column; gap: 9px; }
+  .r { display: flex; align-items: center; gap: 14px; }
+  .bar { height: 14px; background: var(--accent-soft); border-left: 2px solid var(--accent); border-radius: 0 var(--radius-xs) var(--radius-xs) 0; }
+  .t { font: var(--text-2xs)/1 var(--font-mono); color: var(--text-tertiary); width: 130px; flex: 0 0 auto; }
+</style>
+</head>
+<body>
+  <div class="r"><span class="t">--space-1 · 4</span><span class="bar" style="width:4px"></span></div>
+  <div class="r"><span class="t">--space-2 · 8</span><span class="bar" style="width:8px"></span></div>
+  <div class="r"><span class="t">--space-3 · 12</span><span class="bar" style="width:12px"></span></div>
+  <div class="r"><span class="t">--space-4 · 16</span><span class="bar" style="width:16px"></span></div>
+  <div class="r"><span class="t">--space-6 · 24</span><span class="bar" style="width:24px"></span></div>
+  <div class="r"><span class="t">--space-8 · 32</span><span class="bar" style="width:32px"></span></div>
+  <div class="r"><span class="t">--space-12 · 48</span><span class="bar" style="width:48px"></span></div>
+  <div class="r"><span class="t">--space-16 · 64</span><span class="bar" style="width:64px"></span></div>
+</body>
+</html>

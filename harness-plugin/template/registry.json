@@ -1,0 +1,11 @@
+{
+  "version": "0.1.0",
+  "root": "global",
+  "overlay": true,
+  "token_budget": 1000000,
+  "areas": [
+    { "id": "global", "title": "전역 영역", "role": "global",
+      "file": "GLOBAL.md", "children": [] }
+  ],
+  "shared_ssot": []
+}

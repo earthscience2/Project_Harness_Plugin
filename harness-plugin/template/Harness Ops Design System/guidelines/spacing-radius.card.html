@@ -1,0 +1,23 @@
+<!-- @dsCard group="Spacing" viewport="700x150" name="라운딩 (Radius)" subtitle="xs 3 → 2xl 18 → pill" -->
+<!doctype html>
+<html lang="ko" data-theme="dark">
+<head>
+<meta charset="utf-8" />
+<link rel="stylesheet" href="../styles.css" />
+<style>
+  body { margin: 0; padding: 20px; background: var(--bg-canvas); display: flex; gap: 14px; align-items: flex-end; }
+  .col { display: flex; flex-direction: column; gap: 8px; align-items: center; }
+  .box { width: 72px; height: 60px; background: var(--surface-2); border: 1px solid var(--border-strong); }
+  .t { font: var(--text-2xs)/1 var(--font-mono); color: var(--text-tertiary); }
+</style>
+</head>
+<body>
+  <div class="col"><div class="box" style="border-radius:var(--radius-xs)"></div><div class="t">xs · 3</div></div>
+  <div class="col"><div class="box" style="border-radius:var(--radius-sm)"></div><div class="t">sm · 5</div></div>
+  <div class="col"><div class="box" style="border-radius:var(--radius-md)"></div><div class="t">md · 7</div></div>
+  <div class="col"><div class="box" style="border-radius:var(--radius-lg)"></div><div class="t">lg · 10</div></div>
+  <div class="col"><div class="box" style="border-radius:var(--radius-xl)"></div><div class="t">xl · 14</div></div>
+  <div class="col"><div class="box" style="border-radius:var(--radius-2xl)"></div><div class="t">2xl · 18</div></div>
+  <div class="col"><div class="box" style="border-radius:var(--radius-pill)"></div><div class="t">pill</div></div>
+</body>
+</html>
