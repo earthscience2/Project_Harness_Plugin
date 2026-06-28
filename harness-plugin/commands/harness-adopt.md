@@ -12,7 +12,7 @@ allowed-tools: Bash, Read, Write, Edit, Glob, Grep
 
 ## 절차
 
-1. **골격 보장**: 루트에 `registry.json` 이 없으면 먼저 `/harness-init` 절차를 수행(템플릿 복사).
+1. **골격 보장 + 프로필 가드**: 루트에 `registry.json` 이 없으면 먼저 `/harness-init` 절차를 수행(템플릿 복사). **이미 있는데 `profile` 이 `research`(또는 `locked: true`)면 중단** — 연구 하네스는 상위 골격이 잠겨 자유 영역 제안이 불가하다. `/harness-research-adopt` 로 안내한다.
 
 2. **코드 스캔**: 디렉터리 구조·진입점·빌드 파일·언어를 파악(Glob/Grep/Read). 백엔드/프론트/엣지/배포 등 자연스러운 흐름을 읽어낸다.
 

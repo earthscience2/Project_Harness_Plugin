@@ -56,12 +56,19 @@ for (const a of areas) {
 }
 if (!byId[reg.root]) E(`root 영역 없음: ${reg.root}`);
 
-// 잠긴 구조(연구 프로필): skeleton 과 영역 집합이 정확히 일치해야 — 추가/삭제 금지
+// 잠긴 골격(연구 프로필): 상위 골격(root + 그 직속 자식들)만 고정. 그 아래 하위 영역 분열은 허용.
 if (reg.locked) {
   const skel = reg.skeleton || [];
+  const rootKids = (byId[reg.root] && byId[reg.root].children) || [];
+  const skelKids = skel.filter(s => s !== reg.root);
+  // 1) 골격 영역은 삭제 불가
   const ids = new Set(areas.map(a => a.id));
   for (const s of skel) if (!ids.has(s)) E(`locked: 골격 영역 '${s}' 삭제됨 — 잠긴 구조에서 삭제 불가`);
-  for (const a of areas) if (!skel.includes(a.id)) E(`locked: 영역 '${a.id}' 추가됨 — 잠긴 구조에서 추가 불가(변형은 runs 원장 exp 태그로)`);
+  // 2) 최상위(root 직속)는 골격 그대로 — 새 상위 영역 추가/제거 금지(하위 분열은 허용)
+  for (const k of rootKids) if (!skel.includes(k)) E(`locked: 최상위 영역 '${k}' 추가됨 — 상위는 골격 ${skelKids.length}개로 고정(분열은 골격 영역 하위에만)`);
+  for (const s of skelKids) if (!rootKids.includes(s)) E(`locked: 골격 영역 '${s}' 가 root 직속이 아님 — 골격 영역은 재배치 불가`);
+  // 3) 골격 영역은 재배치 불가(부모 고정)
+  for (const s of skelKids) if (byId[s] && byId[s].parent !== reg.root) E(`locked: 골격 영역 '${s}' 의 parent 변경 금지`);
 }
 
 const sizes = [];
