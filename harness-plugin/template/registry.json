@@ -1,7 +1,8 @@
 {
   "version": "0.1.0",
+  "project": "TODO",
   "root": "global",
-  "overlay": true,
+  "contained": true,
   "token_budget": 1000000,
   "areas": [
     { "id": "global", "title": "전역 영역", "role": "global",

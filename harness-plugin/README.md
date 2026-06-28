@@ -1,6 +1,6 @@
 # area-harness — 플러그인 정리
 
-코드를 **옮기지 않는** 오버레이 SSOT 하네스. 기존/빈 프로젝트 위에 영역(Area) 지식 그래프 + 일정·자동화·로그·보고서를 얹고, Claude Code 가 그 위에서 일한다.
+코드를 **영역으로 수용(contained)** 하는 SSOT 하네스. `/harness-adopt` 가 소스를 각 영역(`src/`) 안으로 물리 이동해 디렉터리 구조 = 영역 트리로 정합시키고, 영역(Area) 지식 그래프 + 일정·자동화·로그·보고서를 얹고, Claude Code 가 그 위에서 일한다.
 
 ## 두 가지 프로필
 
@@ -13,14 +13,14 @@
 | 전용 조각 | — | `runs/`(런 원장), 2티어 평가 |
 | 공통 | 영역 그래프 · `schedule` · `automation` · `logs` · **`reports`(HTML)** · web 콘솔 | |
 
-두 프로필은 같은 뼈대(레지스트리·검사기·web·디자인시스템·서브시스템)를 쓴다. 연구용은 그 위에 **잠긴 registry + 연구 GLOBAL + 런 원장**만 더한 오버레이.
+두 프로필은 같은 뼈대(레지스트리·검사기·web·디자인시스템·서브시스템)를 쓴다. 연구용은 그 위에 **잠긴 registry + 연구 GLOBAL + 런 원장**만 더한 변형.
 
 ## 명령
 
 | 명령 | 하는 일 |
 |------|---------|
-| `/harness-init` | 빈 저장소에 서비스용 골격 생성(코드 무이동). |
-| `/harness-adopt [범위]` | 기존 코드베이스를 영역으로 오버레이 매핑(파일 무이동). 구조 제안 → 승인 → 작성. |
+| `/harness-init` | 빈 저장소에 서비스용 골격 생성(이후 새 코드는 영역 `src/` 안에). |
+| `/harness-adopt [범위]` | 기존 코드를 영역으로 **수용**(소스를 각 영역 `src/` 로 `git mv` 이동). 구조 제안 → 승인 → 이동 → 참조 재작성 → 빌드 게이트 → 작성. 실패 시 롤백. |
 | `/harness-area <add\|split\|move\|rm>` | 영역 편집. `registry.json` 단일 편집 → 검사 → 로그. **잠긴 구조면 add/split/rm 거부.** |
 | `/harness-status` | 상태 점검(말단 크기·분열 후보·끊긴 참조·최근 로그). 읽기 전용. |
 | `/harness-research-init` | 연구용 골격 생성 — 잠긴 6영역 + 런 원장 + HTML 보고서. |
@@ -29,22 +29,22 @@
 
 - **전역**: 마인드맵 루트. 설명서(`GLOBAL.md`).
 - **중간다리**: 연결만 하는 노드(`_area.md`, 자식 목록). **자식 ≥ 2 일 때만.**
-- **말단**: 실내용. `ssot/`(공유 가능) + `content/`. 코드는 `sources` 원위치에 그대로.
+- **말단**: 실내용. 영역 폴더 = **`src/`(수용된 실소스) + `content/`(전용 자료) + `ssot/`(NOTES.md + 문서)**. adopt 가 소스를 `src/` 로 이동, `sources` 는 영역 내부(`areas/<path>/src/...`)를 가리킨다.
 
-**규칙:** 코드 무이동 · 경계는 의미로(1영역=1책임) · 토큰은 2차 가드레일 · 실내용은 말단에만 · 변경하면 `logs/log.jsonl` 한 줄.
+**규칙:** 코드 수용(adopt 시 영역 `src/` 로 이동) · 경계는 의미로(1영역=1책임) · 공유 모듈은 `areas/shared/src/` · 토큰은 2차 가드레일 · 실내용은 말단에만 · 변경하면 `logs/log.jsonl` 한 줄.
 
 ### registry.json — 단일 소스
 영역 트리의 유일한 진실. 추가/분열/공유 변경 시 이 파일만 고친다. 사람용 트리는 web 마인드맵이 실시간으로 그린다.
 
 ### check-registry.mjs — 게이트
-편집 후 `node check-registry.mjs`. 끊긴 참조·고아·역할 오류 → exit 1. 말단 텍스트 용량을 **실파일에서** 측정(`token_budget`×4 bytes 기준)해 분열 시점을 경고하고, web 게이지용 `web/sizes.json` 을 갱신한다. `locked` 면 `skeleton` 과 영역 집합 일치까지 강제.
+편집 후 `node check-registry.mjs`. 끊긴 참조·고아·역할 오류 → exit 1. 말단 텍스트 용량을 **실파일에서** 측정(`token_budget`×4 bytes 기준)해 분열 시점을 경고하고, web 게이지용 `harness/sizes.json` 을 갱신한다. `locked` 면 `skeleton` 과 영역 집합 일치까지 강제.
 
 ### ssot 카테고리 (frontmatter `category` 필수)
 `규칙`(권장) · `강제`(위반 불가) · `설명`(참고) · `기억`(결정 이력, 되돌리기 전 확인).
 
 ## 서브시스템 (web 콘솔 탭)
 
-`web/index.html` = 마인드맵 + 탭. 정적 페이지(백엔드 없음), 각 JSON 이 단일 소스. 편집은 Claude Code 가 파일을 고침.
+`harness/index.html` = 마인드맵 + 탭. 정적 페이지(백엔드 없음), 각 JSON 이 단일 소스. 편집은 Claude Code 가 파일을 고침.
 
 | 탭 | 소스 | 내용 |
 |----|------|------|
@@ -83,7 +83,7 @@ harness-plugin/
     harness-init · adopt · area · status · research-init .md
   template/                         # 서비스용 골격 — init/adopt 가 깖
     registry.json  GLOBAL.md  check-registry.mjs
-    web/                            #   마인드맵 + 탭 콘솔
+    harness/                            #   마인드맵 + 탭 콘솔
     Harness Ops Design System/      #   공유 디자인시스템(토큰·컴포넌트)
     schedule/ automation/ logs/ reports/ _ssot/
     research/                       # 연구 오버레이 — research-init 이 추가로 깖
@@ -96,4 +96,4 @@ harness-plugin/
 /plugin marketplace add <이 repo>
 /plugin install area-harness
 ```
-`template/`·`commands/` 수정 후엔 `/plugin` 새로고침. 마인드맵: 하네스 루트에서 `python -m http.server` → `http://localhost:8000/web/`.
+`template/`·`commands/` 수정 후엔 `/plugin` 새로고침. 마인드맵: 하네스 루트에서 `python -m http.server` → `http://localhost:8000/harness/`.
