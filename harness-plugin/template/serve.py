@@ -103,7 +103,16 @@ class Handler(SimpleHTTPRequestHandler):
         except Exception as e:                    # ponytail: 단일 핸들러, 에러는 500 한 줄
             self._json({"ok": False, "reason": str(e)}, 500)
 
+def port_busy(p):                                # 이미 누가 듣고 있으면 True (Windows 는 SO_REUSEADDR 로 bind 가 안 막혀 직접 확인)
+    import socket
+    with socket.socket() as s:
+        s.settimeout(0.3)
+        return s.connect_ex(("127.0.0.1", p)) == 0
+
 if __name__ == "__main__":
     port = int(sys.argv[1]) if len(sys.argv) > 1 else 8000
-    print(f"하네스: http://localhost:{port}/harness/   (env 저장 + 자동화 실행 엔드포인트)")
-    ThreadingHTTPServer(("127.0.0.1", port), Handler).serve_forever()
+    if port_busy(port): port = 0                  # 사용 중 → OS 가 빈 포트 배정
+    httpd = ThreadingHTTPServer(("127.0.0.1", port), Handler)
+    port = httpd.server_address[1]
+    print(f"하네스: http://localhost:{port}/harness/   (env 저장 + 자동화 실행 엔드포인트)", flush=True)
+    httpd.serve_forever()
