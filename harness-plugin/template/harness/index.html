@@ -445,6 +445,13 @@ async function main(){
   document.addEventListener('keydown', e=>{ if(e.key==='Escape'){ closeModal(); hideMenu(); } else if((e.ctrlKey||e.metaKey) && (e.key==='z'||e.key==='Z') && !e.shiftKey){ const t=e.target; if(t && /^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName)) return; e.preventDefault(); undo(); } });
   document.addEventListener('mousedown', e=>{ if(ctxEl && ctxEl.classList.contains('open') && !ctxEl.contains(e.target)) hideMenu(); });
   document.addEventListener('scroll', hideMenu, true);
+  // 목록 카드 우클릭 → 그 정보가 든 파일의 상대경로 복사 (보고서는 data-href=개별 파일, 나머지는 탭별 단일 소스)
+  document.addEventListener('contextmenu', e=>{
+    const card=e.target.closest('.auto-card, .sch-item'); if(!card) return;
+    const SRC={log:'logs/log.jsonl', schedule:'schedule/schedule.json', auto:'automation/automation.json', cc:'automation/automation.json'};
+    const rel = card.dataset.href ? card.dataset.href.replace(/^(\.\.\/)+/,'') : SRC[document.body.dataset.tab];
+    if(rel) showPathMenu(e, rel);
+  });
 }
 
 // ---- tidy tree auto-layout (row per leaf, parent = mid of children) ----
@@ -483,6 +490,17 @@ function showNodeMenu(e, a){
   const lbl=ctxEl.querySelector('#ctx-copy span');
   ctxEl.querySelector('#ctx-copy').onclick=async ()=>{ const ok=await copyText(rel); lbl.textContent= ok?'복사됨':'복사 실패'; setTimeout(hideMenu, ok?550:900); };
   ctxEl.querySelector('#ctx-sched').onclick=()=>{ hideMenu(); openEventForm(null, null); const sel=document.querySelector('#ev-dialog select[name=area]'); if(sel) sel.value=a.id; };
+}
+// 목록(자동화·Claude Code·로그·일정·보고서) 우클릭 → 해당 정보가 든 파일의 상대경로 복사
+function showPathMenu(e, rel){
+  e.preventDefault();
+  if(!ctxEl){ ctxEl=document.createElement('div'); ctxEl.className='ctxmenu'; document.body.appendChild(ctxEl); }
+  ctxEl.innerHTML=`<div class="mp">${rel}</div><div class="mi" id="ctx-copy">${icon('share','')}<span>상대경로 복사</span></div>`;
+  ctxEl.style.left=Math.min(e.clientX, window.innerWidth-190)+'px';
+  ctxEl.style.top =Math.min(e.clientY, window.innerHeight-70)+'px';
+  ctxEl.classList.add('open');
+  const lbl=ctxEl.querySelector('#ctx-copy span');
+  ctxEl.querySelector('#ctx-copy').onclick=async ()=>{ const ok=await copyText(rel); lbl.textContent= ok?'복사됨':'복사 실패'; setTimeout(hideMenu, ok?550:900); };
 }
 
 function undo(){

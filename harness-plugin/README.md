@@ -23,6 +23,8 @@
 | `/harness-adopt [범위]` | 기존 코드를 영역으로 **수용**(소스를 각 영역 `content/` 로 `git mv` 이동). 구조 제안 → 승인 → 이동 → 참조 재작성 → 빌드 게이트 → 작성. 실패 시 롤백. |
 | `/harness-area <add\|split\|move\|rm>` | 영역 편집. `registry.json` 단일 편집 → 검사 → 로그. **잠긴 구조면 add/split/rm 거부.** |
 | `/harness-status` | 상태 점검(말단 크기·분열 후보·끊긴 참조·최근 로그). 읽기 전용. |
+| `/harness-open` | 콘솔 페이지를 로컬 서버(`serve.py`)로 띄워 브라우저로 열기. 읽기 전용. |
+| `/harness-update` | 기존 하네스의 페이지·콘솔·디자인 파일만 플러그인 최신본으로 덮어쓰기(데이터 보존). 구버전 디자인 → 최신 페이지 구조. |
 | `/harness-research-init` | 연구용 골격 생성 — 잠긴 6영역 + 런 원장 + HTML 보고서. |
 
 ## 영역 모델
